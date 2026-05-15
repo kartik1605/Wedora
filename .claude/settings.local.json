@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "PowerShell(winget install *)",
+      "PowerShell(Start-Sleep -Seconds 2; $proc = Start-Process python -ArgumentList \"-m\",\"http.server\",\"8080\" -WorkingDirectory \"D:\\\\Wedora\" -WindowStyle Hidden -PassThru; $proc.Id)",
+      "PowerShell(Get-Command *)",
+      "PowerShell(head *)",
+      "WebFetch(domain:docs.google.com)",
+      "WebFetch(domain:doc-04-6o-docstext.googleusercontent.com)",
+      "Bash(start *)"
+    ]
+  }
+}

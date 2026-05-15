@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Wedora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="stacked-gallery.css" />
+  <style>
+    :root { --navy:#141c36; --gold:#D4AF37; --gold-light:#e8cc6a; --ivory:#F5F0E8; --ivory-dim:#c9c2b4; --transition:cubic-bezier(0.77,0,0.175,1); }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--navy);color:var(--ivory);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+    ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:var(--navy);} ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;background:rgba(20,28,54,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(212,175,55,0.15);transition:padding 0.4s ease;}
+    nav.scrolled{padding:16px 60px;}
+    .nav-logo{text-decoration:none;}
+    .nav-links{display:flex;gap:40px;list-style:none;}
+    .nav-links a{color:var(--ivory);text-decoration:none;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;font-weight:500;position:relative;padding-bottom:4px;transition:color 0.3s ease;}
+    .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width 0.4s var(--transition);}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+    .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 28px;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.4s ease;text-decoration:none;}
+    .nav-cta:hover{background:var(--gold);color:var(--navy);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .hamburger span{width:28px;height:1px;background:var(--gold);display:block;}
+
+    .page-hero{height:60vh;padding-top:88px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .page-hero-bg{position:absolute;inset:0;background:url('images/optimized/Yellow Botanica/5.jpg') center/cover;}
+    .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(20,28,54,0.92),rgba(20,28,54,0.6),rgba(20,28,54,0.88));}
+    .page-hero-content{position:relative;z-index:2;text-align:center;}
+    .page-hero-eyebrow{font-size:0.65rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .page-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:300;color:var(--ivory);line-height:1.05;}
+    .page-hero-title span{color:var(--gold);font-style:italic;}
+    .page-hero-sub{font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--ivory-dim);margin-top:18px;}
+    .breadcrumb{position:absolute;bottom:32px;left:60px;z-index:2;display:flex;align-items:center;gap:12px;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;}
+    .breadcrumb a{color:var(--gold);text-decoration:none;} .breadcrumb span{color:var(--ivory-dim);} .breadcrumb i{color:rgba(212,175,55,0.5);font-size:0.5rem;}
+
+    section{padding:100px 60px;}
+    .section-label{font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;line-height:1.1;color:var(--ivory);}
+    .section-title span{color:var(--gold);font-style:italic;}
+    .gold-line{width:60px;height:1px;background:var(--gold);margin:28px 0;}
+
+    /* INTRO */
+    .services-intro{text-align:center;padding:80px 60px 40px;}
+    .services-intro p{font-size:0.88rem;color:var(--ivory-dim);line-height:1.9;max-width:640px;margin:0 auto;font-weight:300;}
+
+    /* SERVICE BLOCKS */
+    .service-block{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:80px 60px;border-bottom:1px solid rgba(212,175,55,0.08);}
+    .service-block:nth-child(even){direction:rtl;}
+    .service-block:nth-child(even) > *{direction:ltr;}
+    .service-block-img{position:relative;overflow:hidden;}
+    .service-block-img img{width:100%;height:480px;object-fit:cover;display:block;transition:transform 0.8s var(--transition);}
+    .service-block:hover .service-block-img img{transform:scale(1.04);}
+    .service-block-img-border{position:absolute;top:16px;left:16px;right:-16px;bottom:-16px;border:1px solid rgba(212,175,55,0.25);z-index:-1;}
+    .service-num-big{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:var(--gold);font-weight:300;line-height:1;display:inline-block;vertical-align:middle;margin-right:20px;margin-bottom:20px;}
+    .service-icon-big{font-size:2.4rem;color:var(--gold);display:inline-block;vertical-align:middle;margin-bottom:20px;}
+    .service-block h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--ivory);font-weight:300;margin-bottom:16px;}
+    .service-block h2 span{color:var(--gold);font-style:italic;}
+    .service-block p{font-size:0.84rem;color:var(--ivory-dim);line-height:1.9;font-weight:300;margin-bottom:24px;}
+    .includes-list{list-style:none;margin-bottom:32px;}
+    .includes-list li{font-size:0.78rem;color:var(--ivory-dim);padding:8px 0;border-bottom:1px solid rgba(212,175,55,0.08);display:flex;align-items:center;gap:12px;}
+    .includes-list li i{color:var(--gold);font-size:0.7rem;}
+    .btn-service{display:inline-flex;align-items:center;gap:10px;color:var(--gold);text-decoration:none;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid rgba(212,175,55,0.4);padding-bottom:4px;transition:border-color 0.3s ease;}
+    .btn-service:hover{border-color:var(--gold);}
+
+    /* PROCESS */
+    #process{background:rgba(0,0,0,0.15);}
+    .process-header{text-align:center;margin-bottom:70px;}
+    .process-header .gold-line{margin:28px auto;}
+    .process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+    .process-steps::before{content:'';position:absolute;top:36px;left:12.5%;right:12.5%;height:1px;background:linear-gradient(to right,var(--gold),rgba(212,175,55,0.2),var(--gold));z-index:0;}
+    .process-step{text-align:center;padding:0 24px;position:relative;z-index:1;}
+    .step-num{width:72px;height:72px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold);background:var(--navy);font-weight:300;}
+    .process-step h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--ivory);margin-bottom:12px;font-weight:400;}
+    .process-step p{font-size:0.75rem;color:var(--ivory-dim);line-height:1.8;font-weight:300;}
+
+    /* CTA */
+    .page-cta{padding:100px 60px;text-align:center;background:linear-gradient(135deg,rgba(212,175,55,0.06),rgba(20,28,54,0.8),rgba(212,175,55,0.04));position:relative;overflow:hidden;}
+    .page-cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(212,175,55,0.07);}
+    .page-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--ivory);font-weight:300;margin-bottom:16px;}
+    .page-cta h2 span{color:var(--gold);font-style:italic;}
+    .page-cta p{font-size:0.8rem;color:var(--ivory-dim);margin-bottom:40px;line-height:1.8;max-width:480px;margin-left:auto;margin-right:auto;}
+    .btn-gold{background:var(--gold);color:var(--navy);padding:16px 44px;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:600;transition:all 0.4s ease;display:inline-block;font-family:'Montserrat',sans-serif;margin:6px;}
+    .btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .btn-outline-gold{background:transparent;color:var(--gold);padding:16px 44px;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:500;border:1px solid var(--gold);transition:all 0.4s ease;display:inline-block;font-family:'Montserrat',sans-serif;margin:6px;}
+    .btn-outline-gold:hover{background:var(--gold);color:var(--navy);}
+
+    .footer-mini{background:rgba(0,0,0,0.3);border-top:1px solid rgba(212,175,55,0.12);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-mini p{font-size:0.7rem;color:var(--ivory-dim);letter-spacing:1px;} .footer-mini span{color:var(--gold);}
+    .footer-mini-links{display:flex;gap:24px;}
+    .footer-mini-links a{color:var(--ivory-dim);text-decoration:none;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s ease;}
+    .footer-mini-links a:hover{color:var(--gold);}
+
+    .whatsapp-float{position:fixed;bottom:36px;right:36px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;text-decoration:none;box-shadow:0 8px 32px rgba(37,211,102,0.4);transition:all 0.3s ease;animation:pulse 2.5s ease infinite;}
+    .whatsapp-float:hover{transform:scale(1.1);}
+    @keyframes pulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,0.4);}50%{box-shadow:0 8px 48px rgba(37,211,102,0.7);}}
+
+    .mobile-menu{display:none;position:fixed;inset:0;background:rgba(20,28,54,0.98);backdrop-filter:blur(20px);z-index:998;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--ivory);text-decoration:none;font-weight:300;transition:color 0.3s ease;}
+    .mobile-menu a:hover{color:var(--gold);}
+    .menu-close{position:absolute;top:28px;right:36px;font-size:1.5rem;color:var(--gold);cursor:pointer;background:none;border:none;}
+
+    .reveal{opacity:0;transform:translateY(36px);transition:opacity 0.9s ease,transform 0.9s var(--transition);}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:1024px){
+      nav{padding:18px 32px;} section{padding:80px 32px;} .services-intro{padding:60px 32px 30px;}
+      .service-block{grid-template-columns:1fr;gap:48px;padding:60px 32px;} .service-block:nth-child(even){direction:ltr;}
+      .process-steps{grid-template-columns:repeat(2,1fr);gap:48px;} .process-steps::before{display:none;}
+    }
+    @media(max-width:768px){
+      .nav-links,.nav-cta{display:none;} .hamburger{display:flex;}
+      .page-hero{height:50vh;} .breadcrumb{left:24px;} section{padding:60px 20px;}
+      .services-intro{padding:50px 20px 24px;} .service-block{padding:50px 20px;}
+      .process-steps{grid-template-columns:1fr;}
+      .footer-mini{padding:24px;flex-direction:column;text-align:center;}
+    }
+    #page-overlay{position:fixed;inset:0;background:#141c36;z-index:9998;transition:opacity .26s ease;pointer-events:none;}
+  </style>
+</head>
+<body>
+<div id="page-overlay"></div>
+
+<a href="https://wa.me/918769919003" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="index.html" onclick="closeMobileMenu()">Home</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
+  <a href="services.html" onclick="closeMobileMenu()">Experiences</a>
+  <a href="gallery.html" onclick="closeMobileMenu()">Portfolio</a>
+  <a href="stories.html" onclick="closeMobileMenu()">Journal</a>
+  <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Wedora Logo" style="height: 52px; width: auto;" /></a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html" class="active">Experiences</a></li>
+    <li><a href="gallery.html">Portfolio</a></li>
+    <li><a href="stories.html">Journal</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/918769919003" class="nav-cta" target="_blank">Book Consultation</a>
+  <div class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <p class="page-hero-eyebrow">✦ What We Offer ✦</p>
+    <h1 class="page-hero-title">Our <span>Services</span></h1>
+    <p class="page-hero-sub">End-to-End Wedding Experiences — Crafted With Love</p>
+  </div>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <i class="fas fa-chevron-right"></i>
+    <span>Services</span>
+  </div>
+</div>
+
+<div class="services-intro reveal">
+  <p class="section-label" style="text-align:center;letter-spacing:5px;">Complete Wedding Solutions</p>
+  <br/>
+  <p>At Wedora, we offer a comprehensive suite of wedding services — all under one roof. Whether you need a single element perfected or a complete royal experience crafted from scratch, we are your trusted partners every step of the way.</p>
+</div>
+
+<!-- SERVICE 1: FLORAL & DECOR -->
+<div class="service-block">
+  <div class="service-block-content reveal">
+    <div class="service-num-big">01</div>
+    <i class="fas fa-spa service-icon-big"></i>
+    <h2>Wedding Design & <span>Styling</span></h2>
+    <p>We design wedding spaces that feel immersive, elegant, and deeply personal. From floral artistry to layered decor styling, every element is thoughtfully curated to create a celebration that reflects your story beautifully.</p>
+    <ul class="includes-list">
+      <li><i class="fas fa-check"></i> Floral installations & mandap styling</li>
+      <li><i class="fas fa-check"></i> Tablescapes & luxury dining setups</li>
+      <li><i class="fas fa-check"></i> Entrance styling & welcome decor</li>
+      <li><i class="fas fa-check"></i> Ceremony aisle & walkway design</li>
+      <li><i class="fas fa-check"></i> Ceiling florals & hanging installations</li>
+      <li><i class="fas fa-check"></i> Backdrops, lounges & statement setups</li>
+    </ul>
+    <a href="contact.html" class="btn-service">Get a Quote <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="service-block-img reveal">
+    <img src="images/optimized/Petals in Lilac/5.jpg" alt="Floral & Décor" />
+    <div class="service-block-img-border"></div>
+  </div>
+</div>
+
+<!-- SERVICE 2: STAGE, SOUND & LIGHTING -->
+<div class="service-block">
+  <div class="service-block-content reveal">
+    <div class="service-num-big">02</div>
+    <i class="fas fa-music service-icon-big"></i>
+    <h2>Atmosphere & <span>Production</span></h2>
+    <p>Every unforgettable celebration is shaped by atmosphere. Through lighting, staging, sound, and visual production, we create experiences that feel seamless, cinematic, and emotionally immersive.</p>
+    <ul class="includes-list">
+      <li><i class="fas fa-check"></i> Stage & production design</li>
+      <li><i class="fas fa-check"></i> Ambient & mood lighting</li>
+      <li><i class="fas fa-check"></i> Sound & live performance setup</li>
+      <li><i class="fas fa-check"></i> LED walls & visual elements</li>
+      <li><i class="fas fa-check"></i> Dance floor & entertainment production</li>
+      <li><i class="fas fa-check"></i> Technical coordination & execution</li>
+    </ul>
+    <a href="contact.html" class="btn-service">Get a Quote <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="service-block-img reveal">
+    <img src="images/optimized/Sage Symphony/1.jpg" alt="Stage & Ceremony" />
+    <div class="service-block-img-border"></div>
+  </div>
+</div>
+
+<!-- SERVICE 3: HOSPITALITY & VENUE -->
+<div class="service-block">
+  <div class="service-block-content reveal">
+    <div class="service-num-big">03</div>
+    <i class="fas fa-concierge-bell service-icon-big"></i>
+    <h2>Guest <span>Hospitality</span></h2>
+    <p>We believe great celebrations are not only beautiful — they should feel effortless for every guest attending. From arrival to farewell, every experience is planned with warmth, comfort, and thoughtful attention.</p>
+    <ul class="includes-list">
+      <li><i class="fas fa-check"></i> Guest welcome & assistance</li>
+      <li><i class="fas fa-check"></i> Hospitality & venue coordination</li>
+      <li><i class="fas fa-check"></i> Guest seating & flow management</li>
+      <li><i class="fas fa-check"></i> Artist & family coordination</li>
+      <li><i class="fas fa-check"></i> Check-in & logistics support</li>
+      <li><i class="fas fa-check"></i> On-ground event assistance</li>
+    </ul>
+    <a href="contact.html" class="btn-service">Get a Quote <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="service-block-img reveal">
+    <img src="images/optimized/Yellow Botanica/9.jpg" alt="Hospitality Setup" />
+    <div class="service-block-img-border"></div>
+  </div>
+</div>
+
+<!-- SERVICE 4: THEME MANAGEMENT -->
+<div class="service-block">
+  <div class="service-block-content reveal">
+    <div class="service-num-big">04</div>
+    <i class="fas fa-magic service-icon-big"></i>
+    <h2>Bespoke <span>Themes</span></h2>
+    <p>No two Wedora celebrations are ever alike. Every concept is designed from scratch — inspired by the couple, the setting, and the atmosphere they want their celebration to feel like.</p>
+    <ul class="includes-list">
+      <li><i class="fas fa-check"></i> Royal heritage concepts</li>
+      <li><i class="fas fa-check"></i> Modern minimal aesthetics</li>
+      <li><i class="fas fa-check"></i> Mehendi & haldi themes</li>
+      <li><i class="fas fa-check"></i> Sundowner & cocktail styling</li>
+      <li><i class="fas fa-check"></i> Color palette & mood curation</li>
+      <li><i class="fas fa-check"></i> Personalized decor detailing</li>
+    </ul>
+    <a href="contact.html" class="btn-service">Get a Quote <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="service-block-img reveal">
+    <img src="images/optimized/Petals in Lilac/3.jpg" alt="Theme Management" />
+    <div class="service-block-img-border"></div>
+  </div>
+</div>
+
+<!-- SERVICE 5: CARNIVAL & ENTERTAINMENT -->
+<div class="service-block">
+  <div class="service-block-content reveal">
+    <div class="service-num-big">05</div>
+    <i class="fas fa-ferris-wheel service-icon-big"></i>
+    <h2>Entertainment <span>Experiences</span></h2>
+    <p>From intimate live performances to high-energy celebrations, we curate entertainment experiences that bring personality, energy, and unforgettable moments to every event.</p>
+    <ul class="includes-list">
+      <li><i class="fas fa-check"></i> Live music & artist curation</li>
+      <li><i class="fas fa-check"></i> Carnival & interactive experiences</li>
+      <li><i class="fas fa-check"></i> Dance & performance setups</li>
+      <li><i class="fas fa-check"></i> DJ & entertainment coordination</li>
+      <li><i class="fas fa-check"></i> Entry moments & special acts</li>
+      <li><i class="fas fa-check"></i> Celebration flow planning</li>
+    </ul>
+    <a href="contact.html" class="btn-service">Get a Quote <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="service-block-img reveal">
+    <img src="images/optimized/Carnival Reverie/2.jpg" alt="Carnival & Entertainment" />
+    <div class="service-block-img-border"></div>
+  </div>
+</div>
+
+<!-- SERVICE 6: VENDOR COORDINATION -->
+<div class="service-block">
+  <div class="service-block-content reveal">
+    <div class="service-num-big">06</div>
+    <i class="fas fa-handshake service-icon-big"></i>
+    <h2>Creative <span>Coordination</span></h2>
+    <p>Behind every seamless wedding is thoughtful coordination. We bring together decorators, artists, planners, hospitality teams, and creatives to ensure every detail flows beautifully.</p>
+    <ul class="includes-list">
+      <li><i class="fas fa-check"></i> Vendor & artist coordination</li>
+      <li><i class="fas fa-check"></i> Timeline & event flow management</li>
+      <li><i class="fas fa-check"></i> Decor & production supervision</li>
+      <li><i class="fas fa-check"></i> Hospitality team coordination</li>
+      <li><i class="fas fa-check"></i> On-site execution management</li>
+      <li><i class="fas fa-check"></i> Seamless multi-team collaboration</li>
+    </ul>
+    <a href="contact.html" class="btn-service">Get a Quote <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="service-block-img reveal">
+    <img src="images/optimized/Sage Symphony/8.jpg" alt="Vendor Coordination" />
+    <div class="service-block-img-border"></div>
+  </div>
+</div>
+
+<!-- HOW WE WORK -->
+<section id="process">
+  <div class="process-header reveal">
+    <p class="section-label">Our Approach</p>
+    <h2 class="section-title">How We <span>Work</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <h4>Discovery Call</h4>
+      <p>We begin by listening — your vision, your style, your story. Every detail you share becomes the foundation of a uniquely personal wedding experience.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">02</div>
+      <h4>Design & Proposal</h4>
+      <p>Our team crafts a detailed concept — moodboards, layouts, vendor selections — tailored to your vision and budget. We refine until it's perfect.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">03</div>
+      <h4>Coordination & Prep</h4>
+      <p>We handle all logistics, vendor bookings, timelines, and site preparations. Every detail is managed so nothing is left to chance on your big day.</p>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-num">04</div>
+      <h4>Your Perfect Day</h4>
+      <p>Our on-ground team executes everything flawlessly. You arrive as royalty — and leave with memories that will last a lifetime.</p>
+    </div>
+  </div>
+</section>
+<!-- GALLERY SHOWCASE -->
+<div class="stacked-gallery reveal" id="sgServices" tabindex="0">
+  <div class="stacked-gallery-header">
+    <p class="sg-label">✦ See It In Action ✦</p>
+    <h2 class="sg-title">Our Work <span>Speaks</span></h2>
+    <div class="sg-line"></div>
+  </div>
+  <div class="sg-carousel-wrap sg-small">
+    <button class="sg-nav sg-nav-prev"><i class="fas fa-chevron-left"></i></button>
+    <div class="sg-card"><img src="images/optimized/Petals in Lilac/5.jpg" alt="Floral Décor" /><div class="sg-card-overlay"><span class="sg-card-label">Floral &amp; Décor</span><span class="sg-card-sub">Service in Action</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Sage Symphony/1.jpg" alt="Stage Setup" /><div class="sg-card-overlay"><span class="sg-card-label">Stage &amp; Lighting</span><span class="sg-card-sub">Dramatic Setups</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Petals in Lilac/3.jpg" alt="Theme Mandap" /><div class="sg-card-overlay"><span class="sg-card-label">Theme Design</span><span class="sg-card-sub">Bespoke Concepts</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Yellow Botanica/9.jpg" alt="Hospitality" /><div class="sg-card-overlay"><span class="sg-card-label">Hospitality</span><span class="sg-card-sub">Royal Treatment</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Carnival Reverie/2.jpg" alt="Carnival" /><div class="sg-card-overlay"><span class="sg-card-label">Carnival Zone</span><span class="sg-card-sub">Fun &amp; Energy</span></div></div>
+    <button class="sg-nav sg-nav-next"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="sg-dots"></div>
+  <div class="sg-view-all"><a href="gallery.html">View Full Gallery <i class="fas fa-arrow-right" style="margin-left:6px;font-size:0.6rem"></i></a></div>
+</div>
+
+<!-- CTA -->
+<section class="page-cta">
+  <p class="section-label" style="text-align:center;">✦ Let's Begin ✦</p>
+  <h2 class="reveal">Ready to Start <span>Planning?</span></h2>
+  <p class="reveal">Reach out and let's discuss how Wedora can craft your perfect royal wedding experience.</p>
+  <div class="reveal">
+    <a href="contact.html" class="btn-gold">Plan My Wedding</a>
+    <a href="gallery.html" class="btn-outline-gold">View Our Work</a>
+  </div>
+</section>
+
+<footer class="footer-mini">
+  <p>© 2025 <span>Wedora</span>. All rights reserved. Crafted with <span>♥</span> in Udaipur.</p>
+  <div class="footer-mini-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+  
+
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60); });
+  function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  var _ov=document.getElementById('page-overlay');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){_ov.style.opacity='0';});});
+  document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute('href');if(!h||h[0]==='#'||/^(mailto:|tel:|http)/.test(h))return;a.addEventListener('click',function(e){e.preventDefault();var d=this.href;_ov.style.pointerEvents='all';_ov.style.opacity='1';setTimeout(function(){window.location.href=d;},265);});});
+</script>
+<script src="stacked-gallery.js"></script>
+</body>
+</html>

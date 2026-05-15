@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Gallery — Wedora</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #141c36;
+      --gold: #D4AF37;
+      --gold-light: #e8cc6a;
+      --gold-dark: #a8891f;
+      --ivory: #F5F0E8;
+      --ivory-dim: #c9c2b4;
+      --transition: cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--navy);
+      color: var(--ivory);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--navy);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* ── NAV (same as home) ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 60px;
+      transition: background 0.5s ease, padding 0.4s ease;
+      background: rgba(20, 28, 54, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    }
+
+    nav.scrolled {
+      padding: 16px 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-style: italic;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--ivory);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.4s var(--transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 10px 28px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      text-decoration: none;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+      display: block;
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      height: 60vh;
+      padding-top: 88px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/optimized/Petals in Lilac/6.jpg') center/cover;
+    }
+
+    .page-hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(20, 28, 54, 0.92), rgba(20, 28, 54, 0.6), rgba(20, 28, 54, 0.88));
+    }
+
+    .page-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .page-hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .page-hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      color: var(--ivory);
+      line-height: 1.05;
+    }
+
+    .page-hero-title span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .page-hero-sub {
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ivory-dim);
+      margin-top: 18px;
+    }
+
+    .breadcrumb {
+      position: absolute;
+      bottom: 32px;
+      left: 60px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .breadcrumb a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .breadcrumb span {
+      color: var(--ivory-dim);
+    }
+
+    .breadcrumb i {
+      color: rgba(212, 175, 55, 0.5);
+      font-size: 0.5rem;
+    }
+
+    /* ── GALLERY INTRO ── */
+    .gallery-intro {
+      text-align: center;
+      padding: 80px 60px 40px;
+    }
+
+    .gallery-intro p {
+      font-size: 0.88rem;
+      color: var(--ivory-dim);
+      line-height: 1.9;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    /* ── THEME FILTER BAR ── */
+    .filter-bar {
+      position: sticky;
+      top: 73px;
+      z-index: 100;
+      background: rgba(20, 28, 54, 0.96);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+      border-top: 1px solid rgba(212, 175, 55, 0.12);
+      padding: 0 60px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    .filter-bar::-webkit-scrollbar {
+      height: 2px;
+    }
+
+    .filter-bar::-webkit-scrollbar-thumb {
+      background: var(--gold);
+    }
+
+    .filter-btn {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ivory-dim);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 20px 28px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .filter-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      right: 50%;
+      height: 2px;
+      background: var(--gold);
+      transition: all 0.4s var(--transition);
+    }
+
+    .filter-btn:hover {
+      color: var(--ivory);
+    }
+
+    .filter-btn.active {
+      color: var(--gold);
+    }
+
+    .filter-btn.active::after {
+      left: 20%;
+      right: 20%;
+    }
+
+    .filter-count {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 0.55rem;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    @keyframes sectionPop {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── CATALOGUE SECTIONS ── */
+    .catalogue-section {
+      padding: 0px 60px 80px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+      animation: sectionPop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .catalogue-section.hidden {
+      display: none;
+    }
+
+    .catalogue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 36px;
+    }
+
+    .catalogue-tag {
+      font-size: 0.6rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .catalogue-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      color: var(--ivory);
+      line-height: 1.1;
+    }
+
+    .catalogue-title span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .catalogue-desc {
+      font-size: 0.78rem;
+      color: var(--ivory-dim);
+      line-height: 1.8;
+      max-width: 400px;
+      font-weight: 300;
+      margin-top: 14px;
+    }
+
+    .catalogue-count {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      color: rgba(212, 175, 55, 0.12);
+      font-weight: 300;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* ── HOVER SLIDESHOW GRID ── */
+    .slideshow-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .slideshow-grid.layout-hero {
+      grid-template-columns: 1.8fr 1fr 1fr;
+      grid-template-rows: 340px 240px;
+    }
+
+    .slideshow-grid.layout-equal {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 300px;
+    }
+
+    .slideshow-grid.layout-mixed {
+      grid-template-columns: 1fr 1fr 1.5fr;
+      grid-template-rows: 320px 220px;
+    }
+
+    .slideshow-grid.layout-wide {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 360px 260px;
+    }
+
+    /* Span rules */
+    .layout-hero .slide-item:nth-child(1) {
+      grid-row: span 2;
+    }
+
+    .layout-mixed .slide-item:nth-child(3) {
+      grid-row: span 2;
+    }
+
+    .layout-wide .slide-item:nth-child(1) {
+      grid-column: span 2;
+    }
+
+    .layout-wide .slide-item:nth-child(5) {
+      grid-column: span 2;
+    }
+
+    /* ── SLIDE ITEM ── */
+    .slide-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Inner slides */
+    .slide-item .inner-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.7s ease, transform 1.2s ease;
+      transform: scale(1.05);
+    }
+
+    .slide-item .inner-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .slide-item:hover .inner-slide.active {
+      transform: scale(1.06);
+    }
+
+    /* Overlay */
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(to top,
+          rgba(20, 28, 54, 0.9) 0%,
+          rgba(20, 28, 54, 0.3) 40%,
+          rgba(20, 28, 54, 0.1) 70%,
+          transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+    }
+
+    .slide-item:hover .slide-overlay {
+      opacity: 1;
+    }
+
+    .slide-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--ivory);
+      font-style: italic;
+      transform: translateY(10px);
+      transition: transform 0.4s ease;
+    }
+
+    .slide-item:hover .slide-label {
+      transform: translateY(0);
+    }
+
+    .slide-sub {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 6px;
+      transform: translateY(10px);
+      transition: transform 0.4s ease 0.05s;
+      opacity: 0;
+    }
+
+    .slide-item:hover .slide-sub {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Slide indicators */
+    .slide-indicators {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 3;
+      display: flex;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .slide-item:hover .slide-indicators {
+      opacity: 1;
+    }
+
+    .slide-ind {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(245, 240, 232, 0.4);
+      transition: background 0.3s ease;
+    }
+
+    .slide-ind.active {
+      background: var(--gold);
+    }
+
+    /* Gold corner accent */
+    .slide-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-top: 3px solid var(--gold);
+      border-left: 3px solid var(--gold);
+      transition: width 0.4s ease, height 0.4s ease;
+      z-index: 3;
+    }
+
+    .slide-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-bottom: 3px solid var(--gold);
+      border-right: 3px solid var(--gold);
+      transition: width 0.4s ease, height 0.4s ease;
+      z-index: 3;
+    }
+
+    .slide-item:hover::before,
+    .slide-item:hover::after {
+      width: 36px;
+      height: 36px;
+    }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(10, 14, 28, 0.97);
+      backdrop-filter: blur(20px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    #lightbox.open {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .lightbox-img-wrap {
+      position: relative;
+      max-width: 85vw;
+      max-height: 75vh;
+      margin-bottom: 60px;
+    }
+
+    .lightbox-img-wrap img {
+      max-width: 85vw;
+      max-height: 75vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 28px;
+      right: 36px;
+      background: none;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--gold);
+      width: 48px;
+      height: 48px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--ivory);
+      width: 52px;
+      height: 52px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .lightbox-prev {
+      left: 28px;
+    }
+
+    .lightbox-next {
+      right: 28px;
+    }
+
+    .lightbox-prev:hover,
+    .lightbox-next:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .lightbox-caption {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: linear-gradient(to top, rgba(10, 14, 28, 0.95) 20%, transparent);
+      pointer-events: none;
+    }
+
+    .lightbox-caption h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--ivory);
+      font-style: italic;
+    }
+
+    .lightbox-caption p {
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 8px;
+    }
+
+    .lightbox-counter {
+      position: fixed;
+      top: 36px;
+      left: 60px;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--ivory-dim);
+    }
+
+    /* ── CTA STRIP ── */
+    .gallery-cta {
+      padding: 100px 60px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(20, 28, 54, 0.8), rgba(212, 175, 55, 0.04));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.07);
+    }
+
+    .gallery-cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--ivory);
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .gallery-cta-title span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .gallery-cta p {
+      font-size: 0.8rem;
+      color: var(--ivory-dim);
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 16px 48px;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.4s ease;
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0 10px 10px;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline-gold {
+      background: transparent;
+      color: var(--gold);
+      padding: 16px 48px;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      border: 1px solid var(--gold);
+      transition: all 0.4s ease;
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0 10px 10px;
+    }
+
+    .btn-outline-gold:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    /* ── FOOTER MINI ── */
+    .footer-mini {
+      background: rgba(0, 0, 0, 0.3);
+      border-top: 1px solid rgba(212, 175, 55, 0.12);
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-mini p {
+      font-size: 0.7rem;
+      color: var(--ivory-dim);
+      letter-spacing: 1px;
+    }
+
+    .footer-mini span {
+      color: var(--gold);
+    }
+
+    .footer-mini-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-mini-links a {
+      color: var(--ivory-dim);
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .footer-mini-links a:hover {
+      color: var(--gold);
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 36px;
+      right: 36px;
+      z-index: 999;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      text-decoration: none;
+      box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+      transition: all 0.3s ease;
+      animation: pulse 2.5s ease infinite;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 8px 48px rgba(37, 211, 102, 0.7);
+      }
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.9s ease, transform 0.9s var(--transition);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 28, 54, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 998;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      color: var(--ivory);
+      text-decoration: none;
+      font-weight: 300;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--gold);
+    }
+
+    .menu-close {
+      position: absolute;
+      top: 28px;
+      right: 36px;
+      font-size: 1.5rem;
+      color: var(--gold);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      nav {
+        padding: 18px 32px;
+      }
+
+      .filter-bar {
+        padding: 0 32px;
+      }
+
+      .catalogue-section {
+        padding: 60px 32px;
+      }
+
+      .slideshow-grid.layout-hero {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 280px 220px;
+      }
+
+      .layout-hero .slide-item:nth-child(1) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      .slideshow-grid.layout-equal {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 260px 260px;
+      }
+
+      .slideshow-grid.layout-mixed {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 260px 260px;
+      }
+
+      .layout-mixed .slide-item:nth-child(3) {
+        grid-row: span 1;
+        grid-column: span 2;
+      }
+
+      .slideshow-grid.layout-wide {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .layout-wide .slide-item:nth-child(1),
+      .layout-wide .slide-item:nth-child(5) {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .page-hero {
+        height: 50vh;
+      }
+
+      .breadcrumb {
+        left: 24px;
+      }
+
+      .catalogue-section {
+        padding: 50px 20px;
+      }
+
+      .catalogue-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .catalogue-count {
+        display: none;
+      }
+
+      .slideshow-grid.layout-hero,
+      .slideshow-grid.layout-equal,
+      .slideshow-grid.layout-mixed,
+      .slideshow-grid.layout-wide {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+
+      .slide-item {
+        min-height: 200px;
+      }
+
+      .layout-hero .slide-item:nth-child(1),
+      .layout-mixed .slide-item:nth-child(3),
+      .layout-wide .slide-item:nth-child(1),
+      .layout-wide .slide-item:nth-child(5) {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      .filter-bar {
+        padding: 0 20px;
+      }
+
+      .filter-btn {
+        padding: 16px 16px;
+        font-size: 0.58rem;
+      }
+
+      .gallery-cta {
+        padding: 70px 24px;
+      }
+
+      .footer-mini {
+        padding: 24px;
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    #page-overlay{position:fixed;inset:0;background:#141c36;z-index:9998;transition:opacity .26s ease;pointer-events:none;}
+  </style>
+  <link href="stacked-gallery.css" rel="stylesheet" />
+</head>
+
+<body>
+<div id="page-overlay"></div>
+  <!-- WHATSAPP FLOAT -->
+  <a class="whatsapp-float" href="https://wa.me/918769919003" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="menu-close" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
+    <a href="index.html" onclick="closeMobileMenu()">Home</a>
+    <a href="about.html" onclick="closeMobileMenu()">About</a>
+    <a href="services.html" onclick="closeMobileMenu()">Experiences</a>
+    <a href="gallery.html" onclick="closeMobileMenu()">Portfolio</a>
+    <a href="stories.html" onclick="closeMobileMenu()">Journal</a>
+    <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
+  </div>
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html">
+      <img src="images/logo.png" alt="Wedora Logo" style="height: 52px; width: auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Experiences</a></li>
+      <li><a class="active" href="gallery.html">Portfolio</a></li>
+      <li><a href="stories.html">Journal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="https://wa.me/918769919003" target="_blank">Book Consultation</a>
+    <div class="hamburger" onclick="openMobileMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content">
+      <p class="page-hero-eyebrow">✦ Our Portfolio ✦</p>
+      <h1 class="page-hero-title">The <span>Gallery</span></h1>
+      <p class="page-hero-sub">Every Frame, A Story — Every Story, A Dream</p>
+    </div>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <i class="fas fa-chevron-right"></i>
+      <span>Gallery</span>
+    </div>
+  </div>
+  <!-- INTRO -->
+  <div class="gallery-intro reveal">
+    <p>Browse our curated catalogue of royal experiences. Each theme is a world of its own — hover to explore the story
+      within each frame.</p>
+  </div>
+  <!-- STACKED GALLERY SHOWCASE -->
+  <div class="stacked-gallery reveal" id="sgGallery" tabindex="0">
+    <div class="stacked-gallery-header">
+      <p class="sg-label">✦ Featured Highlights ✦</p>
+      <h2 class="sg-title">Our Finest <span>Moments</span></h2>
+      <div class="sg-line"></div>
+    </div>
+    <div class="sg-carousel-wrap">
+      <button class="sg-nav sg-nav-prev"><i class="fas fa-chevron-left"></i></button>
+      <div class="sg-card"><img alt="Petals in Lilac Mandap" src="images/optimized/Petals in Lilac/1.jpg" />
+        <div class="sg-card-overlay"><span class="sg-card-label">Royal Rajasthani</span><span
+            class="sg-card-sub">Heritage Collection · Udaipur</span></div>
+      </div>
+      <div class="sg-card"><img alt="Yellow Botanica Ceiling" src="images/optimized/Yellow Botanica/10.jpg" />
+        <div class="sg-card-overlay"><span class="sg-card-label">Floral Wonderland</span><span class="sg-card-sub">Bloom
+            Mandap · Pastel Dreams</span></div>
+      </div>
+      <div class="sg-card"><img alt="Carnival Reverie Arch" src="images/optimized/Carnival Reverie/2.jpg" />
+        <div class="sg-card-overlay"><span class="sg-card-label">Black &amp; Gold Luxe</span><span
+            class="sg-card-sub">Premium · Dramatic</span></div>
+      </div>
+      <div class="sg-card"><img alt="Sage Symphony Ceremony" src="images/optimized/Sage Symphony/1.jpg" />
+        <div class="sg-card-overlay"><span class="sg-card-label">Garden &amp; Boho</span><span
+            class="sg-card-sub">Outdoor · Natural · Warm</span></div>
+      </div>
+      <div class="sg-card"><img alt="Petals in Lilac Rooftop" src="images/optimized/Petals in Lilac/3.jpg" />
+        <div class="sg-card-overlay"><span class="sg-card-label">Destination Weddings</span><span
+            class="sg-card-sub">Udaipur · Kumbhalgarh</span></div>
+      </div>
+      <div class="sg-card"><img alt="Sage Symphony Backdrop" src="images/optimized/Sage Symphony/2.jpg" />
+        <div class="sg-card-overlay"><span class="sg-card-label">Royal Mandap</span><span class="sg-card-sub">Grand
+            Stage · Heritage</span></div>
+      </div>
+      <div class="sg-card"><img alt="Gold Chandelier Mandap" src="images/instagram/optimized/ig_1.jpg" />
+        <div class="sg-card-overlay"><span class="sg-card-label">Lake Pichola</span><span class="sg-card-sub">Lakeside
+            Ceremony</span></div>
+      </div>
+      <button class="sg-nav sg-nav-next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="sg-dots"></div>
+  </div>
+  <!-- FILTER BAR -->
+  <style>
+    .slideshow-grid.layout-gallery {
+      display: flex;
+      overflow-x: auto;
+      gap: 16px;
+      padding-bottom: 24px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold, #D4AF37) rgba(255, 255, 255, 0.05);
+    }
+
+    .slideshow-grid.layout-gallery::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .slideshow-grid.layout-gallery::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .slideshow-grid.layout-gallery::-webkit-scrollbar-thumb {
+      background: var(--gold, #D4AF37);
+      border-radius: 10px;
+    }
+
+    .slideshow-grid.layout-gallery::-webkit-scrollbar-thumb:hover {
+      background: #fff;
+    }
+
+    .slideshow-grid.layout-gallery .slide-item {
+      flex: 0 0 auto;
+      width: 300px;
+      height: 380px;
+      scroll-snap-align: start;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      grid-column: auto !important;
+      grid-row: auto !important;
+    }
+
+    .slideshow-grid.layout-gallery .slide-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 1024px) {
+      .slideshow-grid.layout-gallery .slide-item {
+        width: 260px;
+        height: 350px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .slideshow-grid.layout-gallery .slide-item {
+        width: 240px;
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .slideshow-grid.layout-gallery .slide-item {
+        width: 80vw;
+        height: 340px;
+        scroll-snap-align: center;
+      }
+
+      .slideshow-grid.layout-gallery {
+        padding-left: 7.5vw;
+        padding-right: 7.5vw;
+      }
+    }
+  </style>
+  <!-- 3D FILTER CAROUSEL -->
+  <style>
+    .filter-3d-wrapper {
+      padding: 110px 5vw 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 0;
+    }
+
+    .filter-3d-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card-3d {
+      position: relative;
+      width: 140px;
+      height: 190px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      scroll-snap-align: center;
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-3d.active {
+      transform: scale(1.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .card-3d:hover:not(.active) {
+      transform: scale(1.05);
+    }
+
+    .card-3d-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .card-3d-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, transparent);
+      z-index: 2;
+    }
+
+    .card-3d-img {
+      position: absolute;
+      bottom: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150%;
+      height: auto;
+      z-index: 3;
+      pointer-events: none;
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5)) brightness(0.9);
+    }
+
+    .card-3d.active .card-3d-img {
+      transform: translateX(-50%) scale(1.15) translateY(-5px);
+      filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.7)) brightness(1.2);
+    }
+
+    .card-3d:hover:not(.active) .card-3d-img {
+      transform: translateX(-50%) scale(1.1) translateY(-5px);
+    }
+
+    .card-3d-content {
+      position: relative;
+      z-index: 4;
+    }
+
+    .card-3d-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 3px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      font-style: italic;
+    }
+
+    .card-3d-content p {
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .bg-all {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+    }
+
+    .bg-carnival {
+      background: linear-gradient(135deg, #2b0a16, #4a152b);
+    }
+
+    .bg-crimson {
+      background: linear-gradient(135deg, #1a0000, #330000);
+    }
+
+    .bg-lilac {
+      background: linear-gradient(135deg, #120b1f, #22153b);
+    }
+
+    .bg-casino {
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+    }
+
+    .bg-sage {
+      background: linear-gradient(135deg, #0a1710, #163324);
+    }
+
+    .bg-yellow {
+      background: linear-gradient(135deg, #261a00, #402c00);
+    }
+
+    @media (max-width: 768px) {
+      .filter-3d-wrapper {
+        padding: 100px 5vw 20px;
+        gap: 45px;
+      }
+
+      .card-3d {
+        width: 110px;
+        height: 160px;
+      }
+
+      .card-3d-img {
+        bottom: 30px;
+      }
+
+      .card-3d-content h3 {
+        font-size: 1rem;
+      }
+    }
+  </style>
+  <div class="filter-3d-wrapper" id="filterBar">
+    <div class="card-3d active" data-filter="all" onclick="filterSection(this,'all')">
+      <div class="card-3d-bg bg-all"></div>
+      <img alt="All" class="card-3d-img" src="images/3d/all_nobg.png" />
+      <div class="card-3d-content">
+        <h3>All Themes</h3>
+        <p>Collection</p>
+      </div>
+    </div>
+    <div class="card-3d" data-filter="carnival" onclick="filterSection(this,'carnival')">
+      <div class="card-3d-bg bg-carnival"></div>
+      <img alt="Carnival" class="card-3d-img" src="images/3d/carnival_nobg.png" />
+      <div class="card-3d-content">
+        <h3>Carnival</h3>
+        <p>Reverie</p>
+      </div>
+    </div>
+    <div class="card-3d" data-filter="crimson" onclick="filterSection(this,'crimson')">
+      <div class="card-3d-bg bg-crimson"></div>
+      <img alt="Crimson" class="card-3d-img" src="images/3d/crimson_nobg.png" />
+      <div class="card-3d-content">
+        <h3>Crimson</h3>
+        <p>Aura</p>
+      </div>
+    </div>
+    <div class="card-3d" data-filter="petals" onclick="filterSection(this,'petals')">
+      <div class="card-3d-bg bg-lilac"></div>
+      <img alt="Petals" class="card-3d-img" src="images/3d/lilac_nobg.png" />
+      <div class="card-3d-content">
+        <h3>Petals</h3>
+        <p>in Lilac</p>
+      </div>
+    </div>
+    <div class="card-3d" data-filter="casino" onclick="filterSection(this,'casino')">
+      <div class="card-3d-bg bg-casino"></div>
+      <img alt="Casino" class="card-3d-img" src="images/3d/casino_nobg.png" />
+      <div class="card-3d-content">
+        <h3>Casino</h3>
+        <p>Sangeet</p>
+      </div>
+    </div>
+    <div class="card-3d" data-filter="sage" onclick="filterSection(this,'sage')">
+      <div class="card-3d-bg bg-sage"></div>
+      <img alt="Sage" class="card-3d-img" src="images/3d/sage_nobg.png" />
+      <div class="card-3d-content">
+        <h3>Sage</h3>
+        <p>Symphony</p>
+      </div>
+    </div>
+    <div class="card-3d" data-filter="yellow" onclick="filterSection(this,'yellow')">
+      <div class="card-3d-bg bg-yellow"></div>
+      <img alt="Yellow" class="card-3d-img" src="images/3d/yellow_nobg.png" />
+      <div class="card-3d-content">
+        <h3>Yellow</h3>
+        <p>Botanica</p>
+      </div>
+    </div>
+  </div>
+  <!-- CATALOGUE 1 -->
+  <section class="catalogue-section reveal" data-catalogue="carnival">
+    <div class="catalogue-header">
+      <div>
+        <p class="catalogue-tag">✦ Theme 01</p>
+        <h2 class="catalogue-title">Carnival <span>Reverie</span></h2>
+        <p class="catalogue-desc">Vibrant, energetic, and full of joy — a celebration of colours.</p>
+      </div>
+      <div class="catalogue-count">01</div>
+    </div>
+    <div class="slideshow-grid layout-gallery">
+      <div class="slide-item" data-images='["images/optimized/Carnival Reverie/1.jpg"]' data-label="The Grand Carnival"
+        data-sub="Vibrant entrance &amp; decor">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Grand Carnival</span><span class="slide-sub">Vibrant
+            entrance &amp; decor</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Carnival Reverie/2.jpg"]' data-label="Joyous Festivities"
+        data-sub="Colorful canopies in motion">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Joyous Festivities</span><span class="slide-sub">Colorful
+            canopies in motion</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Carnival Reverie/3.jpg"]'
+        data-label="Radiant Celebrations" data-sub="A kaleidoscope of colors">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Radiant Celebrations</span><span class="slide-sub">A
+            kaleidoscope of colors</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Carnival Reverie/4.jpg"]'
+        data-label="Luxury Accents" data-sub="Premium detailing">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Luxury Accents</span><span class="slide-sub">Premium detailing</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Carnival Reverie/5.jpg"]'
+        data-label="Golden Evening" data-sub="Lush dramatic ambiance">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Golden Evening</span><span class="slide-sub">Lush dramatic ambiance</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Carnival Reverie/6.jpg"]'
+        data-label="Regal Experience" data-sub="The perfect setup">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Regal Experience</span><span class="slide-sub">The perfect setup</span></div>
+      </div>
+    </div>
+  </section>
+  <!-- CATALOGUE 2 -->
+  <section class="catalogue-section reveal" data-catalogue="petals">
+    <div class="catalogue-header">
+      <div>
+        <p class="catalogue-tag">✦ Theme 02</p>
+        <h2 class="catalogue-title">Petals in <span>Lilac</span></h2>
+        <p class="catalogue-desc">A beautiful arrangement of lilac and purple florals.</p>
+      </div>
+      <div class="catalogue-count">02</div>
+    </div>
+    <div class="slideshow-grid layout-gallery">
+      <div class="slide-item" data-images='["images/optimized/Petals in Lilac/1.jpg"]' data-label="Enchanted Walkway"
+        data-sub="A path of blooming lilacs">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Enchanted Walkway</span><span class="slide-sub">A path of
+            blooming lilacs</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Petals in Lilac/2.jpg"]' data-label="The Floral Arch"
+        data-sub="Elegance in every petal">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Floral Arch</span><span class="slide-sub">Elegance in
+            every petal</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Petals in Lilac/3.jpg"]' data-label="Twilight Ambience"
+        data-sub="Soft glows &amp; purple hues">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Twilight Ambience</span><span class="slide-sub">Soft glows
+            &amp; purple hues</span></div>
+      </div>
+
+      <div class="slide-item" data-images='["images/optimized/Petals in Lilac/5.jpg"]' data-label="The Mandap Decor"
+        data-sub="A symphony of pastels">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Mandap Decor</span><span class="slide-sub">A symphony
+            of pastels</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Petals in Lilac/6.jpg"]' data-label="Lilac Dreams"
+        data-sub="Where romance blossoms">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Lilac Dreams</span><span class="slide-sub">Where romance
+            blossoms</span></div>
+      </div>
+    </div>
+  </section>
+  <!-- CATALOGUE 3 -->
+  <section class="catalogue-section reveal" data-catalogue="sage">
+    <div class="catalogue-header">
+      <div>
+        <p class="catalogue-tag">✦ Theme 03</p>
+        <h2 class="catalogue-title">Sage <span>Symphony</span></h2>
+        <p class="catalogue-desc">Lush greenery, earthy textures, and natural elegance.</p>
+      </div>
+      <div class="catalogue-count">03</div>
+    </div>
+    <div class="slideshow-grid layout-gallery">
+      <div class="slide-item" data-images='["images/optimized/Sage Symphony/1.jpg"]' data-label="Botanical Elegance"
+        data-sub="Lush green pathways">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Botanical Elegance</span><span class="slide-sub">Lush green
+            pathways</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Sage Symphony/2.jpg"]' data-label="Earthy Textures"
+        data-sub="A natural, grounded setup">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Earthy Textures</span><span class="slide-sub">A natural,
+            grounded setup</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Sage Symphony/3.jpg"]' data-label="The Verdant Canopy"
+        data-sub="Under the leaves">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Verdant Canopy</span><span class="slide-sub">Under the
+            leaves</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Sage Symphony/4.jpg"]' data-label="Serene Ambiance"
+        data-sub="Soft light &amp; green hues">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Serene Ambiance</span><span class="slide-sub">Soft light
+            &amp; green hues</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Sage Symphony/5.jpg"]' data-label="Floral &amp; Foliage"
+        data-sub="The perfect natural blend">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Floral &amp; Foliage</span><span class="slide-sub">The
+            perfect natural blend</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Sage Symphony/6.jpg"]' data-label="The Enchanted Forest"
+        data-sub="A magical green setting">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Enchanted Forest</span><span class="slide-sub">A
+            magical green setting</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Sage Symphony/7.jpg"]' data-label="Rustic Charm"
+        data-sub="Woodlands &amp; elegance">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Rustic Charm</span><span class="slide-sub">Woodlands &amp;
+            elegance</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Sage Symphony/8.jpg"]' data-label="Sage Symphony"
+        data-sub="Nature's grand stage">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Sage Symphony</span><span class="slide-sub">Nature's grand
+            stage</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CATALOGUE 4 -->
+  <section class="catalogue-section reveal" data-catalogue="yellow">
+    <div class="catalogue-header">
+      <div>
+        <p class="catalogue-tag">✦ Theme 04</p>
+        <h2 class="catalogue-title">Yellow <span>Botanica</span></h2>
+        <p class="catalogue-desc">Warm yellow blooms and golden hues for a sunny celebration.</p>
+      </div>
+      <div class="catalogue-count">04</div>
+    </div>
+    <div class="slideshow-grid layout-gallery">
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/1.jpg"]' data-label="Golden Marigolds"
+        data-sub="The essence of Haldi">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Golden Marigolds</span><span class="slide-sub">The essence
+            of Haldi</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/2.jpg"]' data-label="Sunny Celebrations"
+        data-sub="Bright &amp; joyful ambiance">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Sunny Celebrations</span><span class="slide-sub">Bright
+            &amp; joyful ambiance</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/3.jpg"]' data-label="The Yellow Canopy"
+        data-sub="Warmth in every drape">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Yellow Canopy</span><span class="slide-sub">Warmth in
+            every drape</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/4.jpg"]' data-label="Vibrant Centerpieces"
+        data-sub="Sunflowers and smiles">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Vibrant Centerpieces</span><span
+            class="slide-sub">Sunflowers and smiles</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/5.jpg"]' data-label="Golden Hour Glow"
+        data-sub="A radiant setup">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Golden Hour Glow</span><span class="slide-sub">A radiant
+            setup</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/6.jpg"]' data-label="The Haldi Stage"
+        data-sub="Where memories are made">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Haldi Stage</span><span class="slide-sub">Where
+            memories are made</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/7.jpg"]' data-label="Floral Abundance"
+        data-sub="Cascading yellow blooms">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Floral Abundance</span><span class="slide-sub">Cascading
+            yellow blooms</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/8.jpg"]' data-label="Warm Festivities"
+        data-sub="An inviting glow">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Warm Festivities</span><span class="slide-sub">An inviting
+            glow</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/9.jpg"]' data-label="The Grand Arch"
+        data-sub="A golden entrance">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Grand Arch</span><span class="slide-sub">A golden
+            entrance</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Yellow Botanica/10.jpg"]' data-label="Yellow Botanica"
+        data-sub="Sunshine and love">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Yellow Botanica</span><span class="slide-sub">Sunshine and
+            love</span></div>
+      </div>
+    </div>
+  </section>
+  <!-- CATALOGUE 5 -->
+  <section class="catalogue-section reveal" data-catalogue="crimson">
+    <div class="catalogue-header">
+      <div>
+        <p class="catalogue-tag">✦ Theme 05</p>
+        <h2 class="catalogue-title">Crimson <span>Aura</span></h2>
+        <p class="catalogue-desc">Deep reds, dramatic ambiance, and a luxurious aura.</p>
+      </div>
+      <div class="catalogue-count">05</div>
+    </div>
+    <div class="slideshow-grid layout-gallery">
+      <div class="slide-item" data-images='["images/optimized/Crimson Aura/1.jpg"]' data-label="Luxurious Red Roses"
+        data-sub="A romantic floral spread">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Luxurious Red Roses</span><span class="slide-sub">A
+            romantic floral spread</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Crimson Aura/2.jpg"]' data-label="The Regal Stage"
+        data-sub="Deep crimson &amp; gold">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Regal Stage</span><span class="slide-sub">Deep crimson
+            &amp; gold</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Crimson Aura/3.jpg"]' data-label="Dramatic Ambiance"
+        data-sub="A night of elegance">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Dramatic Ambiance</span><span class="slide-sub">A night of
+            elegance</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Crimson Aura/4.jpg"]' data-label="Crimson Centerpiece"
+        data-sub="Ornate golden vases">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Crimson Centerpiece</span><span class="slide-sub">Ornate
+            golden vases</span>
+        </div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Crimson Aura/5.jpg"]' data-label="The Grand Setup"
+        data-sub="A luxurious aura">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Grand Setup</span><span class="slide-sub">A luxurious
+            aura</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CATALOGUE 6 -->
+  <section class="catalogue-section reveal" data-catalogue="casino">
+    <div class="catalogue-header">
+      <div>
+        <p class="catalogue-tag">✦ Theme 06</p>
+        <h2 class="catalogue-title">Royal Casino <span>Sangeet</span></h2>
+        <p class="catalogue-desc">Glamorous casino theme for a night full of fun and games.</p>
+      </div>
+      <div class="catalogue-count">06</div>
+    </div>
+    <div class="slideshow-grid layout-gallery">
+      <div class="slide-item" data-images='["images/optimized/Royal Casino Sangeet/1.jpg"]'
+        data-label="The High Rollers" data-sub="Glamorous casino tables">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The High Rollers</span><span class="slide-sub">Glamorous
+            casino tables</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Royal Casino Sangeet/2.jpg"]' data-label="Neon Nights"
+        data-sub="Sparkling Sangeet energy">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Neon Nights</span><span class="slide-sub">Sparkling Sangeet
+            energy</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Royal Casino Sangeet/3.jpg"]' data-label="The Poker Setup"
+        data-sub="Cards, chips, and fun">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Poker Setup</span><span class="slide-sub">Cards, chips,
+            and fun</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Royal Casino Sangeet/4.jpg"]' data-label="Royal Ambiance"
+        data-sub="A golden casino floor">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">Royal Ambiance</span><span class="slide-sub">A golden
+            casino floor</span></div>
+      </div>
+      <div class="slide-item" data-images='["images/optimized/Royal Casino Sangeet/5.jpg"]'
+        data-label="The Winning Hand" data-sub="A night of celebration">
+        <div class="slide-indicators"></div>
+        <div class="slide-overlay"><span class="slide-label">The Winning Hand</span><span class="slide-sub">A night of
+            celebration</span></div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA -->
+  <section class="gallery-cta reveal">
+    <p style="font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">✦
+      Start Your Story ✦</p>
+    <h2 class="gallery-cta-title">Love What You <span>See?</span></h2>
+    <p>Let's create something even more extraordinary — just for you.</p>
+    <a class="btn-gold" href="https://wa.me/918769919003" target="_blank">
+      <i class="fab fa-whatsapp"></i>  Chat on WhatsApp
+    </a>
+    <a class="btn-outline-gold" href="contact.html">Plan My Wedding</a>
+  </section>
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <div class="lightbox-counter" id="lbCounter">1 / 3</div>
+    <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+    <button class="lightbox-prev" onclick="lbNav(-1)"><i class="fas fa-chevron-left"></i></button>
+    <div class="lightbox-img-wrap">
+      <img alt="" id="lbImg" src="">
+      </img>
+    </div>
+    <button class="lightbox-next" onclick="lbNav(1)"><i class="fas fa-chevron-right"></i></button>
+    <div class="lightbox-caption">
+      <h4 id="lbLabel"></h4>
+      <p id="lbSub"></p>
+    </div>
+  </div>
+  <!-- FOOTER MINI -->
+  <footer class="footer-mini">
+    <p>© 2025 <span>Wedora</span>. All rights reserved. Crafted with <span>♥</span> in Udaipur.</p>
+    <div class="footer-mini-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Experiences</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+  <script>
+    // ── NAV SCROLL ──
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── MOBILE MENU ──
+    function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+    // ── REVEAL ──
+    const revealEls = document.querySelectorAll('.reveal');
+    new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.08 }).observe ? (() => {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+      }, { threshold: 0.08 });
+      revealEls.forEach(el => obs.observe(el));
+    })() : revealEls.forEach(el => el.classList.add('visible'));
+
+    // ── INIT HOVER SLIDESHOWS ──
+    document.querySelectorAll('.slide-item').forEach(item => {
+      const images = JSON.parse(item.dataset.images);
+      const indContainer = item.querySelector('.slide-indicators');
+      let current = 0;
+      let interval = null;
+
+      // Create inner slides
+      images.forEach((src, i) => {
+        const div = document.createElement('div');
+        div.className = 'inner-slide' + (i === 0 ? ' active' : '');
+        div.style.backgroundImage = `url('${src}')`;
+        item.insertBefore(div, item.firstChild);
+
+        const ind = document.createElement('div');
+        ind.className = 'slide-ind' + (i === 0 ? ' active' : '');
+        indContainer.appendChild(ind);
+      });
+
+      const innerSlides = item.querySelectorAll('.inner-slide');
+      const inds = indContainer.querySelectorAll('.slide-ind');
+
+      function goTo(n) {
+        innerSlides[current].classList.remove('active');
+        inds[current].classList.remove('active');
+        current = (n + images.length) % images.length;
+        innerSlides[current].classList.add('active');
+        inds[current].classList.add('active');
+      }
+
+      item.addEventListener('mouseenter', () => {
+        if (images.length > 1) {
+          interval = setInterval(() => goTo(current + 1), 1000);
+        }
+      });
+      item.addEventListener('mouseleave', () => {
+        clearInterval(interval);
+        goTo(0);
+      });
+
+      // Click opens lightbox
+      item.addEventListener('click', () => {
+        const section = item.closest('.catalogue-section');
+        const allItems = Array.from(section.querySelectorAll('.slide-item'));
+
+        const gallery = allItems.map(si => {
+          const imgs = JSON.parse(si.dataset.images || '[]');
+          return {
+            src: imgs[0],
+            label: si.dataset.label,
+            sub: si.dataset.sub
+          };
+        });
+
+        const clickedIndex = allItems.indexOf(item);
+        openLightbox(gallery, clickedIndex);
+      });
+    });
+
+    // ── FILTER ──
+    function filterSection(btn, filter) {
+      document.querySelectorAll('.card-3d').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.catalogue-section').forEach(sec => {
+        if (filter === 'all' || sec.dataset.catalogue === filter) {
+          sec.classList.remove('hidden');
+        } else {
+          sec.classList.add('hidden');
+        }
+      });
+    }
+
+    // ── LIGHTBOX ──
+    let lbGallery = [], lbIndex = 0;
+
+    function openLightbox(gallery, index) {
+      lbGallery = gallery;
+      lbIndex = index;
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function lbNav(dir) {
+      lbIndex = (lbIndex + dir + lbGallery.length) % lbGallery.length;
+      updateLightbox();
+    }
+
+    function updateLightbox() {
+      const img = document.getElementById('lbImg');
+      img.style.opacity = '0';
+      img.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => {
+        img.src = lbGallery[lbIndex].src;
+        document.getElementById('lbLabel').textContent = lbGallery[lbIndex].label;
+        document.getElementById('lbSub').textContent = lbGallery[lbIndex].sub;
+        img.style.opacity = '1';
+      }, 150);
+      document.getElementById('lbCounter').textContent = `${lbIndex + 1} / ${lbGallery.length}`;
+    }
+
+    document.getElementById('lightbox').addEventListener('click', function (e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('lightbox').classList.contains('open')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') lbNav(1);
+        if (e.key === 'ArrowLeft') lbNav(-1);
+      }
+    });
+
+    var _ov=document.getElementById('page-overlay');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){_ov.style.opacity='0';});});
+    document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute('href');if(!h||h[0]==='#'||/^(mailto:|tel:|http)/.test(h))return;a.addEventListener('click',function(e){e.preventDefault();var d=this.href;_ov.style.pointerEvents='all';_ov.style.opacity='1';setTimeout(function(){window.location.href=d;},265);});});
+  </script>
+  <script src="stacked-gallery.js"></script>
+</body>
+
+</html>

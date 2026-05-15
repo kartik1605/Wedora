@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Stories — Wedora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="stacked-gallery.css" />
+  <style>
+    :root { --navy:#141c36; --gold:#D4AF37; --gold-light:#e8cc6a; --ivory:#F5F0E8; --ivory-dim:#c9c2b4; --transition:cubic-bezier(0.77,0,0.175,1); }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--navy);color:var(--ivory);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+    ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:var(--navy);} ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;background:rgba(20,28,54,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(212,175,55,0.15);transition:padding 0.4s ease;}
+    nav.scrolled{padding:16px 60px;}
+    .nav-logo{text-decoration:none;}
+    .nav-links{display:flex;gap:40px;list-style:none;}
+    .nav-links a{color:var(--ivory);text-decoration:none;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;font-weight:500;position:relative;padding-bottom:4px;transition:color 0.3s ease;}
+    .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width 0.4s var(--transition);}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+    .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 28px;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.4s ease;text-decoration:none;}
+    .nav-cta:hover{background:var(--gold);color:var(--navy);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .hamburger span{width:28px;height:1px;background:var(--gold);display:block;}
+
+    .page-hero{height:60vh;padding-top:88px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .page-hero-bg{position:absolute;inset:0;background:url('images/optimized/Carnival Reverie/2.jpg') center/cover;}
+    .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(20,28,54,0.92),rgba(20,28,54,0.58),rgba(20,28,54,0.88));}
+    .page-hero-content{position:relative;z-index:2;text-align:center;}
+    .page-hero-eyebrow{font-size:0.65rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .page-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:300;color:var(--ivory);line-height:1.05;}
+    .page-hero-title span{color:var(--gold);font-style:italic;}
+    .page-hero-sub{font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--ivory-dim);margin-top:18px;}
+    .breadcrumb{position:absolute;bottom:32px;left:60px;z-index:2;display:flex;align-items:center;gap:12px;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;}
+    .breadcrumb a{color:var(--gold);text-decoration:none;} .breadcrumb span{color:var(--ivory-dim);} .breadcrumb i{color:rgba(212,175,55,0.5);font-size:0.5rem;}
+
+    .section-label{font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;line-height:1.1;color:var(--ivory);}
+    .section-title span{color:var(--gold);font-style:italic;}
+    .gold-line{width:60px;height:1px;background:var(--gold);margin:28px auto;}
+
+    /* INTRO */
+    .stories-intro{text-align:center;padding:80px 60px 40px;}
+    .stories-intro p{font-size:0.88rem;color:var(--ivory-dim);line-height:1.9;max-width:600px;margin:0 auto;font-weight:300;}
+
+    /* FEATURED STORY */
+    .featured-story{display:grid;grid-template-columns:1fr 1fr;min-height:600px;margin-bottom:4px;}
+    .featured-story-img{position:relative;overflow:hidden;}
+    .featured-story-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--transition);}
+    .featured-story:hover .featured-story-img img{transform:scale(1.04);}
+    .featured-story-content{background:rgba(20,28,54,0.7);backdrop-filter:blur(4px);border:1px solid rgba(212,175,55,0.08);padding:70px 56px;display:flex;flex-direction:column;justify-content:center;}
+    .story-tag{font-size:0.58rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .story-couple{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:var(--ivory);font-weight:300;margin-bottom:8px;}
+    .story-couple span{color:var(--gold);font-style:italic;}
+    .story-location{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--ivory-dim);margin-bottom:28px;display:flex;align-items:center;gap:8px;}
+    .story-location i{color:var(--gold);}
+    .story-stars{color:var(--gold);font-size:0.9rem;margin-bottom:20px;letter-spacing:3px;}
+    .story-quote{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--ivory);line-height:1.7;font-style:italic;font-weight:300;margin-bottom:28px;position:relative;padding-left:24px;}
+    .story-quote::before{content:'\201C';position:absolute;left:0;top:-8px;font-size:3rem;color:var(--gold);line-height:1;}
+    .story-theme-tags{display:flex;flex-wrap:wrap;gap:10px;}
+    .s-tag{padding:5px 14px;border:1px solid rgba(212,175,55,0.25);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--ivory-dim);}
+
+    /* STORIES GRID */
+    .stories-section{padding:80px 60px;}
+    .stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+    .story-card{background:rgba(20,28,54,0.5);border:1px solid rgba(212,175,55,0.08);overflow:hidden;transition:all 0.4s ease;cursor:pointer;}
+    .story-card:hover{border-color:rgba(212,175,55,0.35);transform:translateY(-4px);}
+    .story-card-img{height:260px;overflow:hidden;position:relative;}
+    .story-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.8s var(--transition);}
+    .story-card:hover .story-card-img img{transform:scale(1.07);}
+    .story-card-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,28,54,0.6),transparent 60%);}
+    .story-card-body{padding:28px 28px 32px;}
+    .story-card-tag{font-size:0.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+    .story-card-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--ivory);font-weight:300;margin-bottom:6px;}
+    .story-card-loc{font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--ivory-dim);margin-bottom:16px;display:flex;align-items:center;gap:6px;}
+    .story-card-loc i{color:var(--gold);font-size:0.55rem;}
+    .story-card-quote{font-size:0.8rem;color:var(--ivory-dim);line-height:1.8;font-weight:300;font-style:italic;}
+    .story-card-stars{color:var(--gold);font-size:0.75rem;margin-top:16px;letter-spacing:2px;}
+
+    /* FULL TESTIMONIAL SLIDER */
+    .slider-section{padding:100px 60px;background:rgba(0,0,0,0.15);}
+    .slider-header{text-align:center;margin-bottom:60px;}
+    .testimonial-slider{max-width:860px;margin:0 auto;}
+    .t-slide{display:none;text-align:center;animation:fadeUp 0.6s ease;}
+    .t-slide.active{display:block;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    .t-stars{color:var(--gold);font-size:1rem;margin-bottom:20px;letter-spacing:4px;}
+    .t-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2rem);color:var(--ivory);line-height:1.65;font-style:italic;font-weight:300;margin-bottom:36px;}
+    .t-quote::before{content:'\201C';color:var(--gold);font-size:3.5rem;line-height:0;vertical-align:-0.6rem;margin-right:4px;}
+    .t-author{font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+    .t-location{font-size:0.65rem;color:var(--ivory-dim);margin-top:8px;letter-spacing:2px;}
+    .t-nav{display:flex;justify-content:center;gap:12px;margin-top:48px;}
+    .t-dot{width:6px;height:6px;border-radius:50%;background:rgba(245,240,232,0.2);cursor:pointer;transition:all 0.3s ease;}
+    .t-dot.active{background:var(--gold);width:22px;border-radius:3px;}
+
+    /* CTA */
+    .page-cta{padding:100px 60px;text-align:center;background:linear-gradient(135deg,rgba(212,175,55,0.06),rgba(20,28,54,0.8),rgba(212,175,55,0.04));position:relative;overflow:hidden;}
+    .page-cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(212,175,55,0.07);}
+    .page-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--ivory);font-weight:300;margin-bottom:16px;position:relative;z-index:1;}
+    .page-cta h2 span{color:var(--gold);font-style:italic;}
+    .page-cta p{font-size:0.8rem;color:var(--ivory-dim);margin-bottom:40px;line-height:1.8;max-width:480px;margin-left:auto;margin-right:auto;position:relative;z-index:1;}
+    .btn-gold{background:var(--gold);color:var(--navy);padding:16px 44px;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:600;transition:all 0.4s ease;display:inline-block;font-family:'Montserrat',sans-serif;margin:6px;position:relative;z-index:1;}
+    .btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .btn-outline-gold{background:transparent;color:var(--gold);padding:16px 44px;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:500;border:1px solid var(--gold);transition:all 0.4s ease;display:inline-block;font-family:'Montserrat',sans-serif;margin:6px;position:relative;z-index:1;}
+    .btn-outline-gold:hover{background:var(--gold);color:var(--navy);}
+
+    .footer-mini{background:rgba(0,0,0,0.3);border-top:1px solid rgba(212,175,55,0.12);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-mini p{font-size:0.7rem;color:var(--ivory-dim);letter-spacing:1px;} .footer-mini span{color:var(--gold);}
+    .footer-mini-links{display:flex;gap:24px;}
+    .footer-mini-links a{color:var(--ivory-dim);text-decoration:none;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s ease;}
+    .footer-mini-links a:hover{color:var(--gold);}
+
+    .whatsapp-float{position:fixed;bottom:36px;right:36px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;text-decoration:none;box-shadow:0 8px 32px rgba(37,211,102,0.4);transition:all 0.3s ease;animation:pulse 2.5s ease infinite;}
+    .whatsapp-float:hover{transform:scale(1.1);}
+    @keyframes pulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,0.4);}50%{box-shadow:0 8px 48px rgba(37,211,102,0.7);}}
+
+    .mobile-menu{display:none;position:fixed;inset:0;background:rgba(20,28,54,0.98);backdrop-filter:blur(20px);z-index:998;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--ivory);text-decoration:none;font-weight:300;transition:color 0.3s ease;}
+    .mobile-menu a:hover{color:var(--gold);}
+    .menu-close{position:absolute;top:28px;right:36px;font-size:1.5rem;color:var(--gold);cursor:pointer;background:none;border:none;}
+
+    .reveal{opacity:0;transform:translateY(36px);transition:opacity 0.9s ease,transform 0.9s var(--transition);}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:1024px){
+      nav{padding:18px 32px;} .stories-intro{padding:60px 32px 30px;}
+      .featured-story{grid-template-columns:1fr;min-height:auto;}
+      .featured-story-img{height:400px;} .featured-story-content{padding:48px 40px;}
+      .stories-section{padding:60px 32px;} .stories-grid{grid-template-columns:repeat(2,1fr);}
+      .slider-section{padding:80px 32px;}
+    }
+    @media(max-width:768px){
+      .nav-links,.nav-cta{display:none;} .hamburger{display:flex;}
+      .page-hero{height:50vh;} .breadcrumb{left:24px;}
+      .stories-intro{padding:50px 20px 20px;} .stories-section{padding:50px 20px;}
+      .stories-grid{grid-template-columns:1fr;} .slider-section{padding:60px 20px;}
+      .page-cta{padding:70px 20px;} .footer-mini{padding:24px;flex-direction:column;text-align:center;}
+    }
+    #page-overlay{position:fixed;inset:0;background:#141c36;z-index:9998;transition:opacity .26s ease;pointer-events:none;}
+  </style>
+</head>
+<body>
+<div id="page-overlay"></div>
+
+<a href="https://wa.me/918769919003" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="index.html" onclick="closeMobileMenu()">Home</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
+  <a href="services.html" onclick="closeMobileMenu()">Experiences</a>
+  <a href="gallery.html" onclick="closeMobileMenu()">Portfolio</a>
+  <a href="stories.html" onclick="closeMobileMenu()">Journal</a>
+  <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Wedora Logo" style="height: 52px; width: auto;" /></a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Experiences</a></li>
+    <li><a href="gallery.html">Portfolio</a></li>
+    <li><a href="stories.html" class="active">Journal</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/918769919003" class="nav-cta" target="_blank">Book Consultation</a>
+  <div class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <p class="page-hero-eyebrow">✦ Real Weddings ✦</p>
+    <h1 class="page-hero-title">Love <span>Stories</span></h1>
+    <p class="page-hero-sub">Every Wedding We Touch Becomes A Story Worth Telling</p>
+  </div>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <i class="fas fa-chevron-right"></i>
+    <span>Stories</span>
+  </div>
+</div>
+
+<div class="stories-intro reveal">
+  <p class="section-label" style="text-align:center;">Words From Our Couples</p><br/>
+  <p>Every love story is unique — and so is every Wedora wedding. Here are a few of the beautiful moments and heartfelt words shared by the couples we've had the honour of celebrating.</p>
+</div>
+
+<!-- FEATURED STORIES -->
+<div class="featured-story reveal">
+  <div class="featured-story-img">
+    <img src="images/optimized/Petals in Lilac/3.jpg" alt="Petals in Lilac · Rooftop Mandap" />
+  </div>
+  <div class="featured-story-content">
+    <p class="story-tag">✦ Featured Story · Royal Rajasthani Theme</p>
+    <h2 class="story-couple">Priya & <span>Arjun</span></h2>
+    <p class="story-location"><i class="fas fa-map-marker-alt"></i> Lake Pichola, Udaipur</p>
+    <div class="story-stars">★★★★★</div>
+    <p class="story-quote">Wedora turned our dream into reality. Every corner of the venue was pure magic — the florals, the lighting, the stage. Our guests couldn't stop talking about it for weeks. We still can't believe it was our wedding.</p>
+    <div class="story-theme-tags">
+      <span class="s-tag">Royal Rajasthani</span>
+      <span class="s-tag">Lakeside</span>
+      <span class="s-tag">250 Guests</span>
+      <span class="s-tag">3-Day Celebration</span>
+    </div>
+  </div>
+</div>
+
+<div class="featured-story reveal">
+  <div class="featured-story-img">
+    <img src="images/optimized/Sage Symphony/2.jpg" alt="Sage Symphony · Mughal Arch" />
+  </div>
+  <div class="featured-story-content">
+    <p class="story-tag">✦ Featured Story · Floral Wonderland Theme</p>
+    <h2 class="story-couple">Sneha & <span>Rahul</span></h2>
+    <p class="story-location"><i class="fas fa-map-marker-alt"></i> Kumbhalgarh Fort, Rajasthan</p>
+    <div class="story-stars">★★★★★</div>
+    <p class="story-quote">From vendor coordination to the carnival activities, Wedora handled everything flawlessly. We didn't have to worry about a single thing on our wedding day. The floral ceiling was the most beautiful thing I have ever seen.</p>
+    <div class="story-theme-tags">
+      <span class="s-tag">Floral Wonderland</span>
+      <span class="s-tag">Fort Wedding</span>
+      <span class="s-tag">180 Guests</span>
+      <span class="s-tag">Carnival Setup</span>
+    </div>
+  </div>
+</div>
+
+<!-- STORIES GRID -->
+<div class="stories-section">
+  <div style="text-align:center;margin-bottom:56px;" class="reveal">
+    <p class="section-label">More Love Stories</p>
+    <h2 class="section-title">Moments We've <span>Cherished</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="stories-grid">
+    <div class="story-card reveal">
+      <div class="story-card-img">
+        <img src="images/instagram/optimized/ig_3.jpg" alt="Floral Arch Sofa · Luxe Décor" />
+        <div class="story-card-img-overlay"></div>
+      </div>
+      <div class="story-card-body">
+        <p class="story-card-tag">✦ Black & Gold Luxe</p>
+        <h3 class="story-card-name">Anjali & Vikram</h3>
+        <p class="story-card-loc"><i class="fas fa-map-marker-alt"></i> Heritage Haveli, Udaipur</p>
+        <p class="story-card-quote">"The Black & Gold theme they created was beyond anything we imagined. Sophisticated, royal, and so uniquely ours. Wedora is truly in a class of their own."</p>
+        <div class="story-card-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="story-card reveal">
+      <div class="story-card-img">
+        <img src="images/optimized/Petals in Lilac/1.jpg" alt="Petals in Lilac · Mandap" />
+        <div class="story-card-img-overlay"></div>
+      </div>
+      <div class="story-card-body">
+        <p class="story-card-tag">✦ Garden & Boho</p>
+        <h3 class="story-card-name">Meera & Siddharth</h3>
+        <p class="story-card-loc"><i class="fas fa-map-marker-alt"></i> Garden Estate, Udaipur</p>
+        <p class="story-card-quote">"Our boho garden wedding was exactly what we dreamed of — relaxed, beautiful, and completely us. The fairy lights, the flowers, the whole vibe was perfection."</p>
+        <div class="story-card-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="story-card reveal">
+      <div class="story-card-img">
+        <img src="images/optimized/Yellow Botanica/5.jpg" alt="Yellow Botanica · Mandap" />
+        <div class="story-card-img-overlay"></div>
+      </div>
+      <div class="story-card-body">
+        <p class="story-card-tag">✦ Candlelight & Drape</p>
+        <h3 class="story-card-name">Riya & Kabir</h3>
+        <p class="story-card-loc"><i class="fas fa-map-marker-alt"></i> Palace Hotel, Udaipur</p>
+        <p class="story-card-quote">"The candlelit reception Wedora designed for us was incredibly romantic. Every single detail — from the drapes to the centrepieces — was breathtaking."</p>
+        <div class="story-card-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="story-card reveal">
+      <div class="story-card-img">
+        <img src="images/optimized/Sage Symphony/4.jpg" alt="Sage Symphony · Boho" />
+        <div class="story-card-img-overlay"></div>
+      </div>
+      <div class="story-card-body">
+        <p class="story-card-tag">✦ Royal Rajasthani</p>
+        <h3 class="story-card-name">Nisha & Rohan</h3>
+        <p class="story-card-loc"><i class="fas fa-map-marker-alt"></i> Rooftop, Udaipur</p>
+        <p class="story-card-quote">"We wanted a wedding that felt royal without being over the top. Wedora delivered exactly that — elegant, warm, and full of character. Best day of our lives."</p>
+        <div class="story-card-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="story-card reveal">
+      <div class="story-card-img">
+        <img src="images/optimized/Petals in Lilac/6.jpg" alt="Petals in Lilac · Lawn" />
+        <div class="story-card-img-overlay"></div>
+      </div>
+      <div class="story-card-body">
+        <p class="story-card-tag">✦ Destination Wedding</p>
+        <h3 class="story-card-name">Simran & Aditya</h3>
+        <p class="story-card-loc"><i class="fas fa-map-marker-alt"></i> Kumbhalgarh, Rajasthan</p>
+        <p class="story-card-quote">"Planning a destination wedding seemed daunting, but Wedora made it feel effortless. They handled everything beautifully and created memories we'll treasure forever."</p>
+        <div class="story-card-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="story-card reveal">
+      <div class="story-card-img">
+        <img src="images/optimized/Yellow Botanica/10.jpg" alt="Yellow Botanica · Ceiling" />
+        <div class="story-card-img-overlay"></div>
+      </div>
+      <div class="story-card-body">
+        <p class="story-card-tag">✦ Custom Theme</p>
+        <h3 class="story-card-name">Kavya & Dev</h3>
+        <p class="story-card-loc"><i class="fas fa-map-marker-alt"></i> Heritage Haveli, Udaipur</p>
+        <p class="story-card-quote">"We came to Wedora with a crazy idea for a celestial theme. They brought it to life beyond our wildest dreams. Every guest asked — how did you even think of this?"</p>
+        <div class="story-card-stars">★★★★★</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL SLIDER -->
+<div class="slider-section">
+  <div class="slider-header reveal">
+    <p class="section-label">In Their Own Words</p>
+    <h2 class="section-title">Straight From The <span>Heart</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="testimonial-slider reveal">
+    <div class="t-slide active">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">Wedora is not just a wedding planning company — they are dream architects. Every single element of our wedding told our story. I cried happy tears all day.</p>
+      <p class="t-author">Pooja & Vikrant Kapoor</p>
+      <p class="t-location">Lake Pichola Palace, Udaipur</p>
+    </div>
+    <div class="t-slide">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">We had a very specific vision and Wedora not only matched it — they elevated it. The attention to detail, the professionalism, the warmth of the entire team was extraordinary.</p>
+      <p class="t-author">Arushi & Nikhil Verma</p>
+      <p class="t-location">Heritage Resort, Kumbhalgarh</p>
+    </div>
+    <div class="t-slide">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">Our families came from across India and everyone was in awe. Guests are still talking about the floral ceiling and the grand entrance. Wedora gave us the wedding of our lives.</p>
+      <p class="t-author">Divya & Sameer Malhotra</p>
+      <p class="t-location">Palace Hotel, Udaipur</p>
+    </div>
+    <div class="t-slide">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">From the first consultation to the last moment of the reception, the Wedora team was with us every step of the way. They feel less like vendors and more like family.</p>
+      <p class="t-author">Preethi & Arun Nair</p>
+      <p class="t-location">Garden Estate, Udaipur</p>
+    </div>
+    <div class="t-nav" id="tNav"></div>
+  </div>
+</div>
+
+<!-- GALLERY SHOWCASE -->
+<div class="stacked-gallery reveal" id="sgStories" tabindex="0">
+  <div class="stacked-gallery-header">
+    <p class="sg-label">✦ Visual Stories ✦</p>
+    <h2 class="sg-title">Moments We <span>Captured</span></h2>
+    <div class="sg-line"></div>
+  </div>
+  <div class="sg-carousel-wrap sg-small">
+    <button class="sg-nav sg-nav-prev"><i class="fas fa-chevron-left"></i></button>
+    <div class="sg-card"><img src="images/optimized/Petals in Lilac/1.jpg" alt="Petals in Lilac" /><div class="sg-card-overlay"><span class="sg-card-label">Priya &amp; Arjun</span><span class="sg-card-sub">Lake Pichola · Udaipur</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Yellow Botanica/10.jpg" alt="Yellow Botanica" /><div class="sg-card-overlay"><span class="sg-card-label">Sneha &amp; Rahul</span><span class="sg-card-sub">Kumbhalgarh Fort</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Carnival Reverie/2.jpg" alt="Carnival Reverie" /><div class="sg-card-overlay"><span class="sg-card-label">Anjali &amp; Vikram</span><span class="sg-card-sub">Heritage Haveli</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Sage Symphony/1.jpg" alt="Sage Symphony" /><div class="sg-card-overlay"><span class="sg-card-label">Meera &amp; Siddharth</span><span class="sg-card-sub">Garden Estate</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Petals in Lilac/3.jpg" alt="Lilac Rooftop" /><div class="sg-card-overlay"><span class="sg-card-label">Riya &amp; Kabir</span><span class="sg-card-sub">Palace Hotel</span></div></div>
+    <button class="sg-nav sg-nav-next"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="sg-dots"></div>
+  <div class="sg-view-all"><a href="gallery.html">View Full Gallery <i class="fas fa-arrow-right" style="margin-left:6px;font-size:0.6rem"></i></a></div>
+</div>
+
+<!-- CTA -->
+<section class="page-cta">
+  <p class="section-label" style="text-align:center;position:relative;z-index:1;">✦ Write Your Story With Us ✦</p>
+  <h2 class="reveal">Your Story Begins <span>Here</span></h2>
+  <p class="reveal">Join 200+ couples who trusted Wedora to create the most beautiful day of their lives.</p>
+  <div class="reveal">
+    <a href="contact.html" class="btn-gold">Plan My Wedding</a>
+    <a href="gallery.html" class="btn-outline-gold">View Our Gallery</a>
+  </div>
+</section>
+
+<footer class="footer-mini">
+  <p>© 2025 <span>Wedora</span>. All rights reserved. Crafted with <span>♥</span> in Udaipur.</p>
+  <div class="footer-mini-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Experiences</a>
+    <a href="gallery.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+  
+
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60); });
+  function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Testimonial slider
+  const slides = document.querySelectorAll('.t-slide');
+  const nav = document.getElementById('tNav');
+  let cur = 0;
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 't-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    nav.appendChild(d);
+  });
+  function goTo(n) {
+    slides[cur].classList.remove('active'); nav.children[cur].classList.remove('active');
+    cur = n; slides[cur].classList.add('active'); nav.children[cur].classList.add('active');
+  }
+  setInterval(() => goTo((cur + 1) % slides.length), 5000);
+
+  var _ov=document.getElementById('page-overlay');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){_ov.style.opacity='0';});});
+  document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute('href');if(!h||h[0]==='#'||/^(mailto:|tel:|http)/.test(h))return;a.addEventListener('click',function(e){e.preventDefault();var d=this.href;_ov.style.pointerEvents='all';_ov.style.opacity='1';setTimeout(function(){window.location.href=d;},265);});});
+</script>
+<script src="stacked-gallery.js"></script>
+</body>
+</html>

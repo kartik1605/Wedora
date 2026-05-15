@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Wedora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="stacked-gallery.css" />
+  <style>
+    :root { --navy:#141c36; --gold:#D4AF37; --gold-light:#e8cc6a; --ivory:#F5F0E8; --ivory-dim:#c9c2b4; --transition:cubic-bezier(0.77,0,0.175,1); }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--navy);color:var(--ivory);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+    ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:var(--navy);} ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;background:rgba(20,28,54,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(212,175,55,0.15);transition:padding 0.4s ease;}
+    nav.scrolled{padding:16px 60px;}
+    .nav-logo{text-decoration:none;}
+    .nav-links{display:flex;gap:40px;list-style:none;}
+    .nav-links a{color:var(--ivory);text-decoration:none;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;font-weight:500;position:relative;padding-bottom:4px;transition:color 0.3s ease;}
+    .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width 0.4s var(--transition);}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+    .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 28px;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.4s ease;text-decoration:none;}
+    .nav-cta:hover{background:var(--gold);color:var(--navy);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .hamburger span{width:28px;height:1px;background:var(--gold);display:block;}
+
+    .page-hero{height:60vh;padding-top:88px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .page-hero-bg{position:absolute;inset:0;background:url('images/optimized/Petals in Lilac/6.jpg') center/cover;}
+    .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(20,28,54,0.92),rgba(20,28,54,0.6),rgba(20,28,54,0.88));}
+    .page-hero-content{position:relative;z-index:2;text-align:center;}
+    .page-hero-eyebrow{font-size:0.65rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .page-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:300;color:var(--ivory);line-height:1.05;}
+    .page-hero-title span{color:var(--gold);font-style:italic;}
+    .page-hero-sub{font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--ivory-dim);margin-top:18px;}
+    .breadcrumb{position:absolute;bottom:32px;left:60px;z-index:2;display:flex;align-items:center;gap:12px;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;}
+    .breadcrumb a{color:var(--gold);text-decoration:none;} .breadcrumb span{color:var(--ivory-dim);} .breadcrumb i{color:rgba(212,175,55,0.5);font-size:0.5rem;}
+
+    section{padding:100px 60px;}
+    .section-label{font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;line-height:1.1;color:var(--ivory);}
+    .section-title span{color:var(--gold);font-style:italic;}
+    .gold-line{width:60px;height:1px;background:var(--gold);margin:28px 0;}
+
+    /* STORY */
+    .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+    .story-text p{font-size:0.88rem;line-height:1.95;color:var(--ivory-dim);margin-bottom:20px;font-weight:300;}
+    .story-text p strong{color:var(--ivory);font-weight:500;}
+    .story-img-wrap{position:relative;}
+    .story-img-wrap img{width:100%;height:560px;object-fit:cover;display:block;}
+    .story-img-border{position:absolute;top:20px;left:20px;right:-20px;bottom:-20px;border:1px solid rgba(212,175,55,0.3);z-index:-1;}
+    .story-badge{position:absolute;bottom:-28px;left:-28px;background:var(--navy);border:1px solid var(--gold);padding:22px 28px;text-align:center;}
+    .story-badge .num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:var(--gold);line-height:1;}
+    .story-badge .lbl{font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--ivory-dim);margin-top:6px;}
+
+    /* VALUES */
+    #values{background:rgba(0,0,0,0.15);}
+    .values-header{text-align:center;margin-bottom:70px;}
+    .values-header .gold-line{margin:28px auto;}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+    .value-card{padding:48px 36px;border:1px solid rgba(212,175,55,0.08);background:rgba(20,28,54,0.5);transition:all 0.4s ease;position:relative;overflow:hidden;}
+    .value-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,175,55,0.07),transparent);opacity:0;transition:opacity 0.4s ease;}
+    .value-card:hover::before{opacity:1;}
+    .value-card:hover{border-color:rgba(212,175,55,0.35);transform:translateY(-4px);}
+    .value-icon{font-size:2rem;color:var(--gold);margin-bottom:20px;display:block;}
+    .value-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--ivory);margin-bottom:12px;font-weight:400;}
+    .value-card p{font-size:0.8rem;color:var(--ivory-dim);line-height:1.8;font-weight:300;}
+    .value-num{position:absolute;top:20px;right:24px;font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(212,175,55,0.05);font-weight:300;}
+
+    /* TEAM */
+    .team-header{text-align:center;margin-bottom:70px;}
+    .team-header .gold-line{margin:28px auto;}
+    .team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:60px;max-width:800px;margin:0 auto;}
+    .team-card{text-align:center;padding:0;}
+    .team-img{width:100%;height:380px;object-fit:cover;object-position:top;display:block;transition:transform 0.6s var(--transition);}
+    .team-card:hover .team-img{transform:scale(1.03);}
+    .team-img-wrap{overflow:hidden;position:relative;margin-bottom:28px;}
+    .team-img-wrap::after{content:'';position:absolute;inset:0;border:2px solid transparent;transition:border-color 0.4s ease;}
+    .team-card:hover .team-img-wrap::after{border-color:rgba(212,175,55,0.4);}
+    .team-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--ivory);font-weight:400;margin-bottom:8px;}
+    .team-role{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .team-bio{font-size:0.78rem;color:var(--ivory-dim);line-height:1.8;font-weight:300;max-width:280px;margin:0 auto;}
+
+    /* WHY US */
+    #why-us{background:rgba(212,175,55,0.03);border-top:1px solid rgba(212,175,55,0.08);border-bottom:1px solid rgba(212,175,55,0.08);}
+    .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+    .why-list{display:flex;flex-direction:column;gap:32px;margin-top:40px;}
+    .why-item{display:flex;gap:24px;align-items:flex-start;}
+    .why-icon{width:48px;height:48px;border:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.1rem;flex-shrink:0;}
+    .why-item h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--ivory);margin-bottom:8px;font-weight:400;}
+    .why-item p{font-size:0.8rem;color:var(--ivory-dim);line-height:1.8;font-weight:300;}
+    .why-image{position:relative;}
+    .why-image img{width:100%;height:600px;object-fit:cover;}
+    .why-image-border{position:absolute;top:20px;right:20px;bottom:-20px;left:-20px;border:1px solid rgba(212,175,55,0.25);z-index:-1;}
+
+    /* STATS STRIP */
+    .stats-strip{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;border-top:1px solid rgba(212,175,55,0.1);border-bottom:1px solid rgba(212,175,55,0.1);}
+    .stat-box{padding:48px 24px;border-right:1px solid rgba(212,175,55,0.1);}
+    .stat-box:last-child{border-right:none;}
+    .stat-num{font-family:'Cormorant Garamond',serif;font-size:3.2rem;color:var(--gold);line-height:1;font-weight:300;}
+    .stat-label{font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--ivory-dim);margin-top:10px;}
+
+    /* CTA */
+    .page-cta{padding:100px 60px;text-align:center;background:linear-gradient(135deg,rgba(212,175,55,0.06),rgba(20,28,54,0.8),rgba(212,175,55,0.04));position:relative;overflow:hidden;}
+    .page-cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(212,175,55,0.07);}
+    .page-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--ivory);font-weight:300;margin-bottom:16px;}
+    .page-cta h2 span{color:var(--gold);font-style:italic;}
+    .page-cta p{font-size:0.8rem;color:var(--ivory-dim);margin-bottom:40px;line-height:1.8;max-width:480px;margin-left:auto;margin-right:auto;}
+    .btn-gold{background:var(--gold);color:var(--navy);padding:16px 44px;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:600;transition:all 0.4s ease;display:inline-block;font-family:'Montserrat',sans-serif;margin:6px;}
+    .btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .btn-outline-gold{background:transparent;color:var(--gold);padding:16px 44px;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:500;border:1px solid var(--gold);transition:all 0.4s ease;display:inline-block;font-family:'Montserrat',sans-serif;margin:6px;}
+    .btn-outline-gold:hover{background:var(--gold);color:var(--navy);}
+
+    /* FOOTER */
+    .footer-mini{background:rgba(0,0,0,0.3);border-top:1px solid rgba(212,175,55,0.12);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-mini p{font-size:0.7rem;color:var(--ivory-dim);letter-spacing:1px;}
+    .footer-mini span{color:var(--gold);}
+    .footer-mini-links{display:flex;gap:24px;}
+    .footer-mini-links a{color:var(--ivory-dim);text-decoration:none;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s ease;}
+    .footer-mini-links a:hover{color:var(--gold);}
+
+    .whatsapp-float{position:fixed;bottom:36px;right:36px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;text-decoration:none;box-shadow:0 8px 32px rgba(37,211,102,0.4);transition:all 0.3s ease;animation:pulse 2.5s ease infinite;}
+    .whatsapp-float:hover{transform:scale(1.1);}
+    @keyframes pulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,0.4);}50%{box-shadow:0 8px 48px rgba(37,211,102,0.7);}}
+
+    .mobile-menu{display:none;position:fixed;inset:0;background:rgba(20,28,54,0.98);backdrop-filter:blur(20px);z-index:998;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--ivory);text-decoration:none;font-weight:300;transition:color 0.3s ease;}
+    .mobile-menu a:hover{color:var(--gold);}
+    .menu-close{position:absolute;top:28px;right:36px;font-size:1.5rem;color:var(--gold);cursor:pointer;background:none;border:none;}
+
+    .reveal{opacity:0;transform:translateY(36px);transition:opacity 0.9s ease,transform 0.9s var(--transition);}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:1024px){
+      nav{padding:18px 32px;} section{padding:80px 32px;}
+      .story-grid,.why-grid{grid-template-columns:1fr;gap:60px;}
+      .story-img-wrap{order:-1;} .values-grid{grid-template-columns:repeat(2,1fr);}
+      .team-grid{grid-template-columns:repeat(2,1fr);} .stats-strip{grid-template-columns:repeat(2,1fr);}
+      .stat-box:nth-child(2){border-right:none;} .stat-box:nth-child(3){border-right:1px solid rgba(212,175,55,0.1);}
+    }
+    @media(max-width:768px){
+      .nav-links,.nav-cta{display:none;} .hamburger{display:flex;}
+      .page-hero{height:50vh;} .breadcrumb{left:24px;} section{padding:60px 20px;}
+      .values-grid{grid-template-columns:1fr;} .team-grid{grid-template-columns:1fr;}
+      .stats-strip{grid-template-columns:1fr 1fr;} .stat-box:nth-child(3){border-right:none;}
+      .footer-mini{padding:24px;flex-direction:column;text-align:center;}
+    }
+    #page-overlay{position:fixed;inset:0;background:#141c36;z-index:9998;transition:opacity .26s ease;pointer-events:none;}
+  </style>
+</head>
+<body>
+<div id="page-overlay"></div>
+
+<a href="https://wa.me/918769919003" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="index.html" onclick="closeMobileMenu()">Home</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
+  <a href="services.html" onclick="closeMobileMenu()">Experiences</a>
+  <a href="gallery.html" onclick="closeMobileMenu()">Portfolio</a>
+  <a href="stories.html" onclick="closeMobileMenu()">Journal</a>
+  <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo.png" alt="Wedora Logo" style="height: 52px; width: auto;" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="services.html">Experiences</a></li>
+    <li><a href="gallery.html">Portfolio</a></li>
+    <li><a href="stories.html">Journal</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/918769919003" class="nav-cta" target="_blank">Book Consultation</a>
+  <div class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <p class="page-hero-eyebrow">✦ Our Journey ✦</p>
+    <h1 class="page-hero-title">About <span>Wedora</span></h1>
+    <p class="page-hero-sub">The Story Behind Every Royal Dream</p>
+  </div>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <i class="fas fa-chevron-right"></i>
+    <span>About</span>
+  </div>
+</div>
+
+<!-- OUR STORY -->
+<section>
+  <div class="story-grid">
+    <div class="story-text reveal">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">Born From a <span>Passion</span><br />For Perfection</h2>
+      <div class="gold-line"></div>
+      <p>Wedora was born in the heart of Udaipur — the City of Lakes — with a singular vision: to create wedding experiences so extraordinary, they become the stories couples tell for generations.</p>
+      <p>What began as a small décor studio has grown into <strong>Udaipur's most trusted full-service wedding experience company</strong>. We've had the honour of crafting over 200 events across Rajasthan's most iconic venues — from palace hotels on the shores of Lake Pichola to the majestic ramparts of Kumbhalgarh Fort.</p>
+      <p>We believe every wedding is a once-in-a-lifetime masterpiece. That belief drives everything we do — from the first consultation to the final petal, from the grandest stage to the smallest detail that only the couple will notice.</p>
+      <p>At Wedora, we don't just plan weddings. <strong>We compose royal experiences.</strong></p>
+    </div>
+    <div class="story-img-wrap reveal">
+      <img src="images/optimized/Sage Symphony/2.jpg" alt="Sage Symphony Setup" />
+      <div class="story-img-border"></div>
+      <div class="story-badge">
+        <div class="num">200+</div>
+        <div class="lbl">Royal Events</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-box reveal">
+    <div class="stat-num">200+</div>
+    <div class="stat-label">Events Crafted</div>
+  </div>
+  <div class="stat-box reveal">
+    <div class="stat-num">20+</div>
+    <div class="stat-label">Trusted Vendors</div>
+  </div>
+  <div class="stat-box reveal">
+    <div class="stat-num">50+</div>
+    <div class="stat-label">Venues Served</div>
+  </div>
+  <div class="stat-box reveal">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Happy Families</div>
+  </div>
+</div>
+
+<!-- OUR VALUES -->
+<section id="values">
+  <div class="values-header reveal">
+    <p class="section-label">What We Stand For</p>
+    <h2 class="section-title">Our <span>Values</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <i class="fas fa-crown value-icon"></i>
+      <h3>Timeless Elegance</h3>
+      <p>Every celebration is designed with thoughtful detail, refined aesthetics, and a sense of effortless luxury.</p>
+    </div>
+    <div class="value-card reveal">
+      <i class="fas fa-heart value-icon"></i>
+      <h3>Genuine Care</h3>
+      <p>We approach every wedding personally — with warmth, dedication, and attention to what matters most.</p>
+    </div>
+    <div class="value-card reveal">
+      <i class="fas fa-paint-brush value-icon"></i>
+      <h3>Creative Expression</h3>
+      <p>Each celebration is designed to feel distinctive, immersive, and true to the couple behind it.</p>
+    </div>
+    <div class="value-card reveal">
+      <i class="fas fa-handshake value-icon"></i>
+      <h3>Seamless Experience</h3>
+      <p>From planning to execution, every detail is coordinated thoughtfully to create a smooth and stress-free celebration.</p>
+    </div>
+    <div class="value-card reveal">
+      <i class="fas fa-leaf value-icon"></i>
+      <h3>Rooted in Heritage</h3>
+      <p>Inspired by Rajasthan’s timeless beauty, our work blends cultural richness with modern elegance.</p>
+    </div>
+    <div class="value-card reveal">
+      <i class="fas fa-star value-icon"></i>
+      <h3>Meaningful Moments</h3>
+      <p>We believe the most beautiful weddings are the ones people continue to feel long after they end.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section>
+  <div class="team-header reveal">
+    <p class="section-label">The People Behind the Magic</p>
+    <h2 class="section-title">Meet Our <span>Team</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-img-wrap">
+        <img class="team-img" src="images/team/kamlesh.jpg" alt="Kamlesh Pokharna" />
+      </div>
+      <p class="team-role">Founder & Head of Operations</p>
+      <h3 class="team-name">Kamlesh Pokharna</h3>
+      <p class="team-bio">With years of experience in wedding planning and execution, Kamlesh ensures every celebration is managed with precision, calmness, and attention to detail. From logistics to seamless coordination, he brings structure and reliability to every Wedora experience.</p>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-img-wrap">
+        <img class="team-img" src="images/team/divyansh.jpg" alt="Divyansh Pokharna" />
+      </div>
+      <p class="team-role">Creative Director</p>
+      <h3 class="team-name">Divyansh Pokharna</h3>
+      <p class="team-bio">Divyansh leads the creative vision behind Wedora, blending modern aesthetics with timeless Rajasthani elegance. From decor styling to overall experience design, every celebration is thoughtfully curated with emotion, detail, and individuality.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why-us">
+  <div class="why-grid">
+    <div class="reveal">
+      <p class="section-label">Why Wedora</p>
+      <h2 class="section-title">The Wedora <span>Difference</span></h2>
+      <div class="gold-line"></div>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-icon"><i class="fas fa-gem"></i></div>
+          <div>
+            <h4>Full-Service Excellence</h4>
+            <p>From concept to execution, we handle everything — décor, lighting, vendors, hospitality — so you can be fully present on your special day.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><i class="fas fa-map-marked-alt"></i></div>
+          <div>
+            <h4>Rajasthan's Local Experts</h4>
+            <p>We know every venue, every vendor, and every hidden gem in Udaipur and beyond. Our local expertise is your unfair advantage.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><i class="fas fa-drafting-compass"></i></div>
+          <div>
+            <h4>Bespoke, Never Template</h4>
+            <p>Every Wedora wedding is designed from scratch for that couple. We listen deeply and create uniquely — no two events are ever the same.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <h4>Trusted by 200+ Families</h4>
+            <p>Our reputation is built on trust, transparency, and the smiles of every couple we've had the honour to serve.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-image reveal">
+      <img src="images/instagram/optimized/ig_1.jpg" alt="Gold Chandelier Mandap" />
+      <div class="why-image-border"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY SHOWCASE -->
+<div class="stacked-gallery reveal" id="sgAbout" tabindex="0">
+  <div class="stacked-gallery-header">
+    <p class="sg-label">✦ Our Work ✦</p>
+    <h2 class="sg-title">Glimpses of <span>Our Craft</span></h2>
+    <div class="sg-line"></div>
+  </div>
+  <div class="sg-carousel-wrap sg-small">
+    <button class="sg-nav sg-nav-prev"><i class="fas fa-chevron-left"></i></button>
+    <div class="sg-card"><img src="images/optimized/Petals in Lilac/1.jpg" alt="Petals in Lilac" /><div class="sg-card-overlay"><span class="sg-card-label">Royal Rajasthani</span><span class="sg-card-sub">Heritage · Udaipur</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Yellow Botanica/10.jpg" alt="Yellow Botanica" /><div class="sg-card-overlay"><span class="sg-card-label">Floral Wonderland</span><span class="sg-card-sub">Bloom · Pastel</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Carnival Reverie/2.jpg" alt="Carnival Reverie" /><div class="sg-card-overlay"><span class="sg-card-label">Black &amp; Gold Luxe</span><span class="sg-card-sub">Premium · Dramatic</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Sage Symphony/1.jpg" alt="Sage Symphony" /><div class="sg-card-overlay"><span class="sg-card-label">Garden &amp; Boho</span><span class="sg-card-sub">Outdoor · Natural</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Petals in Lilac/3.jpg" alt="Lilac Rooftop" /><div class="sg-card-overlay"><span class="sg-card-label">Destination Weddings</span><span class="sg-card-sub">Udaipur · Beyond</span></div></div>
+    <button class="sg-nav sg-nav-next"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="sg-dots"></div>
+  <div class="sg-view-all"><a href="gallery.html">View Full Gallery <i class="fas fa-arrow-right" style="margin-left:6px;font-size:0.6rem"></i></a></div>
+</div>
+
+<!-- CTA -->
+<section class="page-cta">
+  <p class="section-label" style="text-align:center;">✦ Begin Your Journey ✦</p>
+  <h2 class="reveal">Ready to Create Your<br /><span>Royal Story?</span></h2>
+  <p class="reveal">Let's sit down, listen to your dream, and craft an experience beyond your imagination.</p>
+  <div class="reveal">
+    <a href="contact.html" class="btn-gold">Plan My Wedding</a>
+    <a href="gallery.html" class="btn-outline-gold">View Our Work</a>
+  </div>
+</section>
+
+<footer class="footer-mini">
+  <p>© 2025 <span>Wedora</span>. All rights reserved. Crafted with <span>♥</span> in Udaipur.</p>
+  <div class="footer-mini-links">
+    <a href="index.html">Home</a>
+    <a href="services.html">Experiences</a>
+    <a href="gallery.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+  
+
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60); });
+  function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  var _ov=document.getElementById('page-overlay');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){_ov.style.opacity='0';});});
+  document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute('href');if(!h||h[0]==='#'||/^(mailto:|tel:|http)/.test(h))return;a.addEventListener('click',function(e){e.preventDefault();var d=this.href;_ov.style.pointerEvents='all';_ov.style.opacity='1';setTimeout(function(){window.location.href=d;},265);});});
+</script>
+<script src="stacked-gallery.js"></script>
+</body>
+</html>

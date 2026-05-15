@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Wedora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="stacked-gallery.css" />
+  <style>
+    :root { --navy:#141c36; --gold:#D4AF37; --gold-light:#e8cc6a; --ivory:#F5F0E8; --ivory-dim:#c9c2b4; --transition:cubic-bezier(0.77,0,0.175,1); }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--navy);color:var(--ivory);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+    ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:var(--navy);} ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;background:rgba(20,28,54,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(212,175,55,0.15);transition:padding 0.4s ease;}
+    nav.scrolled{padding:16px 60px;}
+    .nav-logo{text-decoration:none;}
+    .nav-links{display:flex;gap:40px;list-style:none;}
+    .nav-links a{color:var(--ivory);text-decoration:none;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;font-weight:500;position:relative;padding-bottom:4px;transition:color 0.3s ease;}
+    .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width 0.4s var(--transition);}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+    .nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 28px;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.4s ease;text-decoration:none;}
+    .nav-cta:hover{background:var(--gold);color:var(--navy);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .hamburger span{width:28px;height:1px;background:var(--gold);display:block;}
+
+    .page-hero{height:55vh;padding-top:88px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .page-hero-bg{position:absolute;inset:0;background:url('images/optimized/Sage Symphony/3.jpg') center/cover;}
+    .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(20,28,54,0.93),rgba(20,28,54,0.6),rgba(20,28,54,0.9));}
+    .page-hero-content{position:relative;z-index:2;text-align:center;}
+    .page-hero-eyebrow{font-size:0.65rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .page-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:300;color:var(--ivory);line-height:1.05;}
+    .page-hero-title span{color:var(--gold);font-style:italic;}
+    .page-hero-sub{font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--ivory-dim);margin-top:18px;}
+    .breadcrumb{position:absolute;bottom:32px;left:60px;z-index:2;display:flex;align-items:center;gap:12px;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;}
+    .breadcrumb a{color:var(--gold);text-decoration:none;} .breadcrumb span{color:var(--ivory-dim);} .breadcrumb i{color:rgba(212,175,55,0.5);font-size:0.5rem;}
+
+    .section-label{font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;line-height:1.1;color:var(--ivory);}
+    .section-title span{color:var(--gold);font-style:italic;}
+    .gold-line{width:60px;height:1px;background:var(--gold);margin:28px 0;}
+
+    /* CONTACT GRID */
+    .contact-section{padding:100px 60px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:80px;align-items:start;}
+
+    /* FORM */
+    .contact-form-wrap{}
+    .contact-form-wrap h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:var(--ivory);font-weight:300;margin-bottom:12px;}
+    .contact-form-wrap h2 span{color:var(--gold);font-style:italic;}
+    .contact-form-wrap>p{font-size:0.82rem;color:var(--ivory-dim);line-height:1.8;margin-bottom:40px;font-weight:300;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .form-group{margin-bottom:20px;}
+    .form-group label{display:block;font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+    .form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(212,175,55,0.2);color:var(--ivory);font-family:'Montserrat',sans-serif;font-size:0.82rem;padding:14px 18px;outline:none;transition:border-color 0.3s ease;appearance:none;-webkit-appearance:none;}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(201,194,180,0.5);}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
+    .form-group select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D4AF37' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;background-color:rgba(20,28,54,0.8);}
+    .form-group select option{background:var(--navy);color:var(--ivory);}
+    .form-group textarea{resize:vertical;min-height:140px;line-height:1.7;}
+    .form-submit{background:var(--gold);color:var(--navy);padding:16px 48px;font-family:'Montserrat',sans-serif;font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;font-weight:600;border:none;cursor:pointer;transition:all 0.4s ease;display:inline-flex;align-items:center;gap:12px;margin-top:8px;}
+    .form-submit:hover{background:var(--gold-light);transform:translateY(-2px);}
+    .form-note{font-size:0.7rem;color:var(--ivory-dim);margin-top:16px;line-height:1.6;}
+
+    /* INFO PANEL */
+    .contact-info{position:sticky;top:120px;background:rgba(20,28,54,0.5);backdrop-filter:blur(12px);border:1px solid rgba(212,175,55,0.12);padding:40px 36px;border-radius:2px;}
+    .contact-info h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--ivory);font-weight:300;margin-bottom:8px;}
+    .contact-info h3 span{color:var(--gold);font-style:italic;}
+    .contact-info>p{font-size:0.8rem;color:var(--ivory-dim);line-height:1.8;margin-bottom:36px;font-weight:300;}
+
+    .info-card{border:1px solid rgba(212,175,55,0.12);padding:28px;margin-bottom:16px;display:flex;gap:20px;align-items:flex-start;transition:border-color 0.3s ease;}
+    .info-card:hover{border-color:rgba(212,175,55,0.35);}
+    .info-icon{width:44px;height:44px;border:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1rem;flex-shrink:0;}
+    .info-card-content h4{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+    .info-card-content a,.info-card-content p{font-size:0.84rem;color:var(--ivory);text-decoration:none;font-weight:300;line-height:1.6;transition:color 0.3s ease;display:block;}
+    .info-card-content a:hover{color:var(--gold);}
+    .info-card-content .sub{font-size:0.72rem;color:var(--ivory-dim);margin-top:4px;}
+
+    .quick-contact{margin-top:32px;}
+    .quick-contact h4{font-size:0.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+    .quick-btns{display:flex;flex-direction:column;gap:12px;}
+    .btn-wa{background:#25D366;color:white;padding:14px 24px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:12px;transition:all 0.4s ease;}
+    .btn-wa:hover{background:#1ebe5d;transform:translateY(-2px);}
+    .btn-call{background:transparent;color:var(--gold);padding:14px 24px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:12px;border:1px solid var(--gold);transition:all 0.4s ease;}
+    .btn-call:hover{background:var(--gold);color:var(--navy);}
+
+    /* FAQ */
+    .faq-section{padding:80px 60px;background:rgba(0,0,0,0.15);}
+    .faq-header{text-align:center;margin-bottom:60px;}
+    .faq-header .gold-line{margin:24px auto;}
+    .faq-grid{column-count:2;column-gap:2px;max-width:1000px;margin:0 auto;}
+    .faq-item{padding:32px 36px;border:1px solid rgba(212,175,55,0.08);cursor:pointer;transition:all 0.4s ease;background:rgba(20,28,54,0.4);break-inside:avoid;margin-bottom:2px;display:inline-block;width:100%;}
+    .faq-item:hover{border-color:rgba(212,175,55,0.3);background:rgba(20,28,54,0.7);}
+    .faq-q{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ivory);font-weight:400;margin-bottom:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+    .faq-q i{color:var(--gold);font-size:0.8rem;margin-top:4px;flex-shrink:0;transition:transform 0.3s ease;}
+    .faq-item.open .faq-q i{transform:rotate(180deg);}
+    .faq-a{font-size:0.78rem;color:var(--ivory-dim);line-height:1.8;font-weight:300;display:none;margin-top:4px;}
+    .faq-item.open .faq-a{display:block;}
+
+    /* CTA STRIP */
+    .cta-strip{padding:100px 60px;text-align:center;background:linear-gradient(135deg,rgba(212,175,55,0.06),rgba(20,28,54,0.9),rgba(212,175,55,0.04));position:relative;overflow:hidden;}
+    .cta-strip::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(212,175,55,0.07);}
+    .cta-strip h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);color:var(--ivory);font-weight:300;margin-bottom:12px;position:relative;z-index:1;}
+    .cta-strip h2 span{color:var(--gold);font-style:italic;}
+    .cta-strip p{font-size:0.78rem;color:var(--ivory-dim);margin-bottom:36px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.8;position:relative;z-index:1;}
+    .social-row{display:flex;justify-content:center;gap:16px;position:relative;z-index:1;}
+    .soc-btn{width:48px;height:48px;border:1px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;color:var(--ivory-dim);font-size:1rem;text-decoration:none;transition:all 0.3s ease;}
+    .soc-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,175,55,0.08);}
+
+    .footer-mini{background:rgba(0,0,0,0.3);border-top:1px solid rgba(212,175,55,0.12);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-mini p{font-size:0.7rem;color:var(--ivory-dim);letter-spacing:1px;} .footer-mini span{color:var(--gold);}
+    .footer-mini-links{display:flex;gap:24px;}
+    .footer-mini-links a{color:var(--ivory-dim);text-decoration:none;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s ease;}
+    .footer-mini-links a:hover{color:var(--gold);}
+
+    .whatsapp-float{position:fixed;bottom:36px;right:36px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:white;font-size:1.5rem;text-decoration:none;box-shadow:0 8px 32px rgba(37,211,102,0.4);transition:all 0.3s ease;animation:pulse 2.5s ease infinite;}
+    .whatsapp-float:hover{transform:scale(1.1);}
+    @keyframes pulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,0.4);}50%{box-shadow:0 8px 48px rgba(37,211,102,0.7);}}
+
+    .mobile-menu{display:none;position:fixed;inset:0;background:rgba(20,28,54,0.98);backdrop-filter:blur(20px);z-index:998;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--ivory);text-decoration:none;font-weight:300;transition:color 0.3s ease;}
+    .mobile-menu a:hover{color:var(--gold);}
+    .menu-close{position:absolute;top:28px;right:36px;font-size:1.5rem;color:var(--gold);cursor:pointer;background:none;border:none;}
+
+    .reveal{opacity:0;transform:translateY(36px);transition:opacity 0.9s ease,transform 0.9s var(--transition);}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:1024px){
+      nav{padding:18px 32px;}
+      .contact-section{grid-template-columns:1fr;gap:60px;padding:80px 32px;}
+      .faq-section{padding:60px 32px;} .faq-grid{column-count:1;}
+    }
+    @media(max-width:768px){
+      .nav-links,.nav-cta{display:none;} .hamburger{display:flex;}
+      .page-hero{height:50vh;} .breadcrumb{left:24px;}
+      .contact-section{padding:60px 20px;} .form-row{grid-template-columns:1fr;}
+      .faq-section{padding:50px 20px;}
+      .cta-strip{padding:70px 20px;}
+      .footer-mini{padding:24px;flex-direction:column;text-align:center;}
+    }
+    #page-overlay{position:fixed;inset:0;background:#141c36;z-index:9998;transition:opacity .26s ease;pointer-events:none;}
+  </style>
+</head>
+<body>
+<div id="page-overlay"></div>
+
+<a href="https://wa.me/918769919003" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="index.html" onclick="closeMobileMenu()">Home</a>
+  <a href="about.html" onclick="closeMobileMenu()">About</a>
+  <a href="services.html" onclick="closeMobileMenu()">Experiences</a>
+  <a href="gallery.html" onclick="closeMobileMenu()">Portfolio</a>
+  <a href="stories.html" onclick="closeMobileMenu()">Journal</a>
+  <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Wedora Logo" style="height: 52px; width: auto;" /></a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Experiences</a></li>
+    <li><a href="gallery.html">Portfolio</a></li>
+    <li><a href="stories.html">Journal</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/918769919003" class="nav-cta" target="_blank">Book Consultation</a>
+  <div class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <p class="page-hero-eyebrow">✦ Let's Begin ✦</p>
+    <h1 class="page-hero-title">Get In <span>Touch</span></h1>
+    <p class="page-hero-sub">Your Royal Wedding Journey Starts With a Conversation</p>
+  </div>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <i class="fas fa-chevron-right"></i>
+    <span>Contact</span>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<div class="contact-section">
+
+  <!-- FORM -->
+  <div class="contact-form-wrap reveal">
+    <p class="section-label">Send Us a Message</p>
+    <h2>Tell Us About Your <span>Dream Wedding</span></h2>
+    <p>Fill in the details below and our team will get back to you within 24 hours. Or reach us directly on WhatsApp for a faster response.</p>
+
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Full name" required />
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 XXXXX XXXXX" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="your@email.com" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Event Date</label>
+          <input type="date" />
+        </div>
+        <div class="form-group">
+          <label>Event Type</label>
+          <select>
+            <option value="" disabled selected>Select event type</option>
+            <option>Wedding Ceremony</option>
+            <option>Mehendi Function</option>
+            <option>Sangeet Night</option>
+            <option>Reception</option>
+            <option>Engagement</option>
+            <option>Complete Wedding Package</option>
+            <option>Corporate Event</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Approx. Guest Count</label>
+          <select>
+            <option value="" disabled selected>Number of guests</option>
+            <option>Under 50</option>
+            <option>50 – 100</option>
+            <option>100 – 200</option>
+            <option>200 – 400</option>
+            <option>400 – 600</option>
+            <option>600+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Budget Range</label>
+          <select>
+            <option value="" disabled selected>Approximate budget</option>
+            <option>Under ₹5 Lakhs</option>
+            <option>₹5 – 10 Lakhs</option>
+            <option>₹10 – 25 Lakhs</option>
+            <option>₹25 – 50 Lakhs</option>
+            <option>₹50 Lakhs – 1 Crore</option>
+            <option>1 Crore+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Tell Us Your Vision</label>
+        <textarea placeholder="Describe your dream wedding — theme, style, special requirements, or anything you'd like us to know..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+      <p class="form-note">We respect your privacy. Your information will never be shared with third parties.</p>
+    </form>
+
+    <div id="successMsg" style="display:none;margin-top:28px;padding:24px 28px;border:1px solid rgba(212,175,55,0.4);background:rgba(212,175,55,0.05);">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);margin-bottom:8px;">Thank you for reaching out!</p>
+      <p style="font-size:0.8rem;color:var(--ivory-dim);line-height:1.7;">We've received your message and will get back to you within 24 hours. For faster response, WhatsApp us directly.</p>
+    </div>
+  </div>
+
+  <!-- INFO PANEL -->
+  <div class="contact-info reveal">
+    <p class="section-label">Reach Us Directly</p>
+    <h3>We'd Love to <span>Hear From You</span></h3>
+    <p>Whether you're just beginning to plan or have every detail ready — we're here to listen, guide, and create something extraordinary together.</p>
+
+    <div class="info-card">
+      <div class="info-icon"><i class="fas fa-phone"></i></div>
+      <div class="info-card-content">
+        <h4>Phone</h4>
+        <a href="tel:+918769919003">+91 87699 19003</a>
+        <p class="sub">Mon – Sat, 10 AM – 7 PM IST</p>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
+      <div class="info-card-content">
+        <h4>WhatsApp</h4>
+        <a href="https://wa.me/918769919003" target="_blank">Chat on WhatsApp</a>
+        <p class="sub">Quickest way to reach us</p>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon"><i class="fab fa-instagram"></i></div>
+      <div class="info-card-content">
+        <h4>Instagram</h4>
+        <a href="https://www.instagram.com/wedoradecorplanners/" target="_blank">@wedoradecorplanners</a>
+        <p class="sub">See our latest work</p>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+      <div class="info-card-content">
+        <h4>Location</h4>
+        <p>Udaipur, Rajasthan, India</p>
+        <p class="sub">Serving all of Rajasthan & beyond</p>
+      </div>
+    </div>
+
+    <div class="quick-contact">
+      <h4>Quick Connect</h4>
+      <div class="quick-btns">
+        <a href="https://wa.me/918769919003" target="_blank" class="btn-wa">
+          <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+        <a href="tel:+918769919003" class="btn-call">
+          <i class="fas fa-phone"></i> Call Us Now
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-header reveal">
+    <p class="section-label">Common Questions</p>
+    <h2 class="section-title">Frequently <span>Asked</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <p class="faq-q">How far in advance should I book Wedora? <i class="fas fa-chevron-down"></i></p>
+      <p class="faq-a">We recommend reaching out at least 6–12 months in advance for peak wedding season (October–March). However, we can accommodate shorter timelines — reach out and we'll do our best to make it work.</p>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <p class="faq-q">Do you handle destination weddings outside Udaipur? <i class="fas fa-chevron-down"></i></p>
+      <p class="faq-a">Absolutely. We travel anywhere in Rajasthan — Kumbhalgarh, Jodhpur, Jaisalmer, Chittorgarh, and beyond. We also take on destination events across India for the right clients.</p>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <p class="faq-q">Can you work within a specific budget? <i class="fas fa-chevron-down"></i></p>
+      <p class="faq-a">Yes. We've worked across a wide range of budgets and always prioritise maximum impact within your investment. During our first consultation, we'll understand your priorities and craft a proposal accordingly.</p>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <p class="faq-q">Do you offer single services or only full packages? <i class="fas fa-chevron-down"></i></p>
+      <p class="faq-a">Both. We can manage your complete wedding experience from start to finish, or handle specific elements like just the décor, just the stage setup, or just vendor coordination — whatever you need.</p>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <p class="faq-q">How does the booking process work? <i class="fas fa-chevron-down"></i></p>
+      <p class="faq-a">It starts with a consultation call or WhatsApp chat. We understand your vision, propose a concept and quote, refine it together, and then secure your date with a booking amount. Simple and transparent.</p>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <p class="faq-q">Will I have a dedicated coordinator on the wedding day? <i class="fas fa-chevron-down"></i></p>
+      <p class="faq-a">Yes, always. Every Wedora wedding has a dedicated on-ground coordinator and team present throughout the event to ensure everything runs flawlessly so you can be fully present in the moment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY SHOWCASE -->
+<div class="stacked-gallery reveal" id="sgContact" tabindex="0">
+  <div class="stacked-gallery-header">
+    <p class="sg-label">✦ Get Inspired ✦</p>
+    <h2 class="sg-title">Imagine <span>Your Day</span></h2>
+    <div class="sg-line"></div>
+  </div>
+  <div class="sg-carousel-wrap sg-small">
+    <button class="sg-nav sg-nav-prev"><i class="fas fa-chevron-left"></i></button>
+    <div class="sg-card"><img src="images/optimized/Petals in Lilac/1.jpg" alt="Petals in Lilac" /><div class="sg-card-overlay"><span class="sg-card-label">Royal Rajasthani</span><span class="sg-card-sub">Heritage · Udaipur</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Yellow Botanica/10.jpg" alt="Yellow Botanica" /><div class="sg-card-overlay"><span class="sg-card-label">Floral Wonderland</span><span class="sg-card-sub">Bloom · Pastel</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Carnival Reverie/2.jpg" alt="Carnival Reverie" /><div class="sg-card-overlay"><span class="sg-card-label">Black &amp; Gold Luxe</span><span class="sg-card-sub">Premium · Dramatic</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Sage Symphony/1.jpg" alt="Sage Symphony" /><div class="sg-card-overlay"><span class="sg-card-label">Garden &amp; Boho</span><span class="sg-card-sub">Outdoor · Natural</span></div></div>
+    <div class="sg-card"><img src="images/optimized/Petals in Lilac/3.jpg" alt="Lilac Rooftop" /><div class="sg-card-overlay"><span class="sg-card-label">Destination Weddings</span><span class="sg-card-sub">Udaipur · Beyond</span></div></div>
+    <button class="sg-nav sg-nav-next"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="sg-dots"></div>
+  <div class="sg-view-all"><a href="gallery.html">View Full Gallery <i class="fas fa-arrow-right" style="margin-left:6px;font-size:0.6rem"></i></a></div>
+</div>
+
+<!-- SOCIAL CTA -->
+<div class="cta-strip">
+  <h2 class="reveal">Follow Our <span>Journey</span></h2>
+  <p class="reveal">Stay inspired — see our latest creations, real weddings, and behind-the-scenes moments on Instagram.</p>
+  <div class="social-row reveal">
+    <a href="https://www.instagram.com/wedoradecorplanners/" target="_blank" class="soc-btn"><i class="fab fa-instagram"></i></a>
+    <a href="https://wa.me/918769919003" target="_blank" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
+    <a href="tel:+918769919003" class="soc-btn"><i class="fas fa-phone"></i></a>
+  </div>
+</div>
+
+<footer class="footer-mini">
+  <p>© 2025 <span>Wedora</span>. All rights reserved. Crafted with <span>♥</span> in Udaipur.</p>
+  <div class="footer-mini-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Experiences</a>
+    <a href="gallery.html">Portfolio</a>
+    <a href="stories.html">Journal</a>
+  </div>
+</footer>
+
+<script>
+  
+
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60); });
+  function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  function toggleFaq(el) {
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('open'));
+    if (!isOpen) {
+      el.classList.add('open');
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('successMsg').style.display = 'block';
+    e.target.style.display = 'none';
+  }
+
+  var _ov=document.getElementById('page-overlay');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){_ov.style.opacity='0';});});
+  document.querySelectorAll('a[href]').forEach(function(a){var h=a.getAttribute('href');if(!h||h[0]==='#'||/^(mailto:|tel:|http)/.test(h))return;a.addEventListener('click',function(e){e.preventDefault();var d=this.href;_ov.style.pointerEvents='all';_ov.style.opacity='1';setTimeout(function(){window.location.href=d;},265);});});
+</script>
+<script src="stacked-gallery.js"></script>
+</body>
+</html>
