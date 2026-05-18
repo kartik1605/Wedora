@@ -3,4 +3,7 @@ compatibility_date = "2026-05-18"
 
 [assets]
 directory = "."
-binding = "ASSETS"
+
+# This forces the worker to act as a static website router
+[site]
+bucket = "."
