@@ -1,0 +1,7 @@
+.git
+.git/
+.claude
+.claude/
+doc.html
+*.py
+Wedora trial*
