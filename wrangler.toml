@@ -1,6 +1,6 @@
-name = "wedora"
+name = "wedora1"
 compatibility_date = "2026-05-18"
 
 [assets]
 directory = "."
-exclude = [".git", ".github", "node_modules", ".gitignore"]
+binding = "ASSETS"
