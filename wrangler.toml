@@ -1,6 +1,0 @@
-name = "wedora1"
-compatibility_date = "2026-05-18"
-
-# This specifies where your static files live without needing an entry point script
-[assets]
-directory = "."
